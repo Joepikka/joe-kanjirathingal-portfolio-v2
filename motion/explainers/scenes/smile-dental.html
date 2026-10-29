@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=1300, height=1000">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:"DM Sans";src:url("assets/dm-sans.woff2") format("woff2");font-weight:100 1000}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1300px;height:1000px;overflow:hidden;background:#d7e0df}
+#root{position:relative;width:100%;height:100%;background:#d7e0df;color:#1c1d20;font-family:"DM Sans",sans-serif;--ink:#1c1d20;--muted:#55585d;--accent:#354bdf;--line:#1c1d2024;--soft:#1c1d2014}
+#head{position:absolute;left:84px;right:84px;top:70px;display:flex;justify-content:space-between;font-size:26px;letter-spacing:.14em}
+#head span:last-child{color:var(--muted)}
+#title{position:absolute;left:84px;right:84px;top:330px}
+#title h1{font-size:132px;font-weight:400;letter-spacing:-.045em;line-height:1}
+#title p{margin-top:26px;font-size:36px;color:var(--muted);letter-spacing:-.02em}
+.step{position:absolute;left:84px;right:84px;top:180px;height:600px;display:grid;grid-template-columns:450px 1fr;gap:70px}
+.copy .idx{font-size:26px;color:var(--muted);letter-spacing:.1em}
+.copy h2{margin-top:22px;font-size:60px;font-weight:400;letter-spacing:-.04em;line-height:1.05}
+.copy p{margin-top:24px;font-size:31px;line-height:1.35;color:var(--muted);letter-spacing:-.015em}
+.stage{position:relative;align-self:center}
+.chips{display:flex;flex-wrap:wrap;gap:16px}
+.chip{padding:18px 30px;border:1.5px solid var(--line);border-radius:60px;font-size:30px}
+.chip.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.row{display:flex;align-items:center;gap:22px;padding:20px 0;border-top:1.5px solid var(--line);font-size:31px;letter-spacing:-.02em}
+.row>span:first-child{flex:1}
+.row .track{flex:1}
+.track{height:14px;background:var(--soft)}
+.fill{height:100%;background:var(--ink);transform-origin:left}
+.tag{font-size:26px;padding:7px 16px;border-radius:40px;background:var(--ink);color:#f8f8f5}
+.tag.miss{background:transparent;color:var(--ink);border:1.5px dashed var(--ink)}
+.bar-row{display:grid;grid-template-columns:270px 1fr 120px;gap:22px;align-items:center;padding:18px 0;font-size:30px;letter-spacing:-.02em}
+.bar-row b{font-weight:400;text-align:right;font-variant-numeric:tabular-nums}
+.bar-row.accent .fill{background:var(--accent)}
+.note{margin-top:18px;font-size:26px;color:var(--muted);letter-spacing:.02em}
+.note.top{margin:0 0 18px}
+.note.between{display:flex;justify-content:space-between}
+.card{padding:40px 44px;background:#fff;border-radius:8px;box-shadow:0 22px 50px #1c1d2014}
+.card small{display:block;font-size:26px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
+.card .type{font-size:46px;line-height:1.2;letter-spacing:-.03em}
+.vector{display:flex;align-items:flex-end;gap:10px;height:330px}
+.vector i{flex:1;background:var(--accent);transform-origin:bottom;border-radius:3px 3px 0 0}
+.grid{display:grid;gap:10px}
+.grid i{aspect-ratio:1;background:var(--ink);border-radius:4px}
+.trend{display:block;width:100%;height:170px;margin-top:28px;border-bottom:1.5px solid var(--line)}
+.trend path{fill:none;stroke:var(--accent);stroke-width:4}
+.split{display:flex;gap:6px;height:110px}
+.split i{display:grid;place-items:center;font-style:normal;font-size:28px;color:#fff;transform-origin:left}
+.split .ink{background:#1c1d20}.split .grey{background:#626469}.split .blue{background:#354bdf}
+.flow{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.node{padding:24px 30px;border:1.5px solid var(--line);border-radius:10px;font-size:31px;background:#ffffff80}
+.node.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.arrow{font-size:40px;line-height:1;color:var(--muted);padding-left:34px}
+.buttons{width:520px}
+.btn{display:block;text-align:center;padding:24px;border-radius:60px;font-size:32px;margin-bottom:18px;border:1.5px solid var(--line)}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stamp{margin-top:10px;font-size:29px;color:var(--accent)}
+.stamp.blocked{color:var(--muted)}
+.cursor{position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 10px #354bdf33}
+#result{position:absolute;left:84px;right:84px;top:300px}
+#result small{font-size:26px;letter-spacing:.14em;color:var(--muted)}
+#result h2{margin-top:26px;font-size:58px;font-weight:400;letter-spacing:-.035em;line-height:1.15;max-width:1050px}
+#result p{margin-top:34px;font-size:32px;color:var(--muted);max-width:980px;line-height:1.35}
+#rail{position:absolute;left:84px;right:84px;top:850px;height:3px;background:var(--line)}
+#progress{height:100%;background:var(--accent);transform-origin:left}
+#labels{position:absolute;left:84px;right:84px;top:874px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;font-size:26px;letter-spacing:-.015em}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1300" data-height="1000">
+<div id="head" class="clip" data-start="0" data-duration="20"><span>SMILE DENTAL · HOW IT WORKS</span><span>ILLUSTRATIVE FLOW</span></div>
+<div id="title" class="clip" data-start="0" data-duration="1.6"><h1>Smile Dental</h1><p>Full-stack web application</p></div>
+<div id="s0" class="step clip" data-start="1.6" data-duration="3.6"><div class="copy"><p class="idx">01 / 04</p><h2>Visit request</h2><p>A patient picks a treatment and requests a time.</p></div><div class="stage"><div class="card"><small>Appointment request</small><p class="type">Cleaning · Tuesday 10:30</p></div></div></div>
+<div id="s1" class="step clip" data-start="5.2" data-duration="3.6"><div class="copy"><p class="idx">02 / 04</p><h2>Patient sign-in</h2><p>Google sign-in opens a personal patient view.</p></div><div class="stage"><div class="buttons"><span class="btn primary">Sign in with Google</span><span class="btn">View services</span><p class="stamp">✓ Patient portal</p></div><div class="cursor"></div></div></div>
+<div id="s2" class="step clip" data-start="8.8" data-duration="3.6"><div class="copy"><p class="idx">03 / 04</p><h2>Appointment state</h2><p>Each request moves through clear, visible states.</p></div><div class="stage"><div class="flow"><span class="node">Requested</span><span class="arrow">↓</span><span class="node">Confirmed</span><span class="arrow">↓</span><span class="node accent">Rescheduled</span></div></div></div>
+<div id="s3" class="step clip" data-start="12.4" data-duration="3.6"><div class="copy"><p class="idx">04 / 04</p><h2>Administration &amp; retries</h2><p>Staff confirm, reschedule or cancel; follow-up work is retried.</p></div><div class="stage"><div class="list"><div class="row"><span>Tuesday 10:30</span><span class="tag">Confirmed</span></div><div class="row"><span>Thursday 16:00</span><span class="tag">Rescheduled</span></div><div class="row"><span>Follow-up email</span><span class="tag">Retry queued</span></div></div></div></div>
+<div id="result" class="clip" data-start="16" data-duration="4"><small>RESULT</small><h2>Patient booking connected to clinic scheduling and service management.</h2><p>Student prototype; no real patient records. Email delivery not independently verified.</p></div>
+<div id="rail" class="clip" data-start="1.6" data-duration="14.4"><div id="progress"></div></div>
+<div id="labels" class="clip" data-start="1.6" data-duration="14.4"><span>Visit request</span><span>Patient sign-in</span><span>Appointment state</span><span>Administration &amp; retries</span></div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+const ease="power3.out";
+const labels=gsap.utils.toArray("#labels span");
+tl.fromTo("#title h1",{opacity:0,y:40},{opacity:1,y:0,duration:.7,ease},.05);
+tl.fromTo("#title p",{opacity:0,y:20},{opacity:1,y:0,duration:.6,ease},.35);
+tl.to("#title",{opacity:0,y:-24,duration:.35,ease:"power1.in"},1.2000000000000002);
+tl.fromTo("#progress",{scaleX:0},{scaleX:1,duration:14.4,ease:"none"},1.6);
+tl.set(labels,{opacity:.32},0);
+tl.to(labels[0],{opacity:1,color:"#354bdf",duration:.3},1.6);
+tl.fromTo("#s0 .copy",{opacity:0,x:-30},{opacity:1,x:0,duration:.55,ease},1.6);
+tl.fromTo("#s0 .stage",{opacity:0},{opacity:1,duration:.3},1.7000000000000002);
+tl.fromTo("#s0 .card",{opacity:0,y:26},{opacity:1,y:0,duration:.5,ease},1.8);
+tl.fromTo("#s0 .type",{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",duration:1.5000000000000002,ease:"none"},2.2);
+tl.to("#s0",{opacity:0,duration:.3,ease:"power1.in"},4.85);
+tl.to(labels[1],{opacity:1,color:"#354bdf",duration:.3},5.2);
+tl.to(labels[0],{color:"#1c1d20",duration:.3},5.2);
+tl.fromTo("#s1 .copy",{opacity:0,x:-30},{opacity:1,x:0,duration:.55,ease},5.2);
+tl.fromTo("#s1 .stage",{opacity:0},{opacity:1,duration:.3},5.3);
+tl.fromTo("#s1 .btn",{opacity:0,y:18},{opacity:1,y:0,duration:.4,ease,stagger:.12},5.45);
+tl.fromTo("#s1 .cursor",{opacity:0,x:560,y:420},{opacity:1,x:470,y:46,duration:.8,ease:"power2.inOut"},5.7);
+tl.to("#s1 .cursor",{scale:.7,duration:.1,yoyo:true,repeat:1},6.550000000000001);
+tl.to("#s1 .btn.primary",{backgroundColor:"var(--accent)",borderColor:"var(--accent)",duration:.2},6.6);
+tl.fromTo("#s1 .stamp",{opacity:0,y:8},{opacity:1,y:0,duration:.35,ease},6.75);
+tl.to("#s1",{opacity:0,duration:.3,ease:"power1.in"},8.45);
+tl.to(labels[2],{opacity:1,color:"#354bdf",duration:.3},8.8);
+tl.to(labels[1],{color:"#1c1d20",duration:.3},8.8);
+tl.fromTo("#s2 .copy",{opacity:0,x:-30},{opacity:1,x:0,duration:.55,ease},8.8);
+tl.fromTo("#s2 .stage",{opacity:0},{opacity:1,duration:.3},8.9);
+tl.fromTo("#s2 .node",{opacity:0,y:20},{opacity:1,y:0,duration:.4,ease,stagger:.45},9.05);
+tl.fromTo("#s2 .arrow",{opacity:0,y:-10},{opacity:1,y:0,duration:.3,ease,stagger:.45},9.3);
+tl.to("#s2",{opacity:0,duration:.3,ease:"power1.in"},12.05);
+tl.to(labels[3],{opacity:1,color:"#354bdf",duration:.3},12.4);
+tl.to(labels[2],{color:"#1c1d20",duration:.3},12.4);
+tl.fromTo("#s3 .copy",{opacity:0,x:-30},{opacity:1,x:0,duration:.55,ease},12.4);
+tl.fromTo("#s3 .stage",{opacity:0},{opacity:1,duration:.3},12.5);
+tl.fromTo("#s3 .row",{opacity:0,x:-26},{opacity:1,x:0,duration:.45,ease,stagger:.15},12.65);
+tl.fromTo("#s3 .tag",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.3,ease:"back.out(2)",stagger:.18},13.5);
+tl.to("#s3",{opacity:0,duration:.3,ease:"power1.in"},15.65);
+tl.fromTo("#result small",{opacity:0},{opacity:1,duration:.4},16);
+tl.fromTo("#result h2",{opacity:0,y:30},{opacity:1,y:0,duration:.6,ease},16.15);
+tl.fromTo("#result p",{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease},16.55);
+tl.to("#result",{opacity:0,duration:.4,ease:"power1.in"},19.55);
+window.__timelines["main"]=tl;
+</script>
+</body>
+</html>

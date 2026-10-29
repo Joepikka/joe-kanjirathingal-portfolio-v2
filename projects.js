@@ -2,6 +2,8 @@
 window.portfolioProjects = [
   {
     "id": "quotecheck",
+    "explainer": "assets/explainer-quotecheck.mp4",
+    "explainerPoster": "assets/explainer-quotecheck-poster.webp",
     "title": "QuoteCheck",
     "category": "data",
     "discipline": "Product Matching & Full-Stack ML",
@@ -72,6 +74,8 @@ window.portfolioProjects = [
   },
   {
     "id": "intentdesk",
+    "explainer": "assets/explainer-intentdesk.mp4",
+    "explainerPoster": "assets/explainer-intentdesk-poster.webp",
     "title": "IntentDesk",
     "category": "data",
     "discipline": "NLP & Model Evaluation",
@@ -142,12 +146,12 @@ window.portfolioProjects = [
       "Human decision"
     ],
     "imageKind": "screenshot",
-    "imageCaption": "Application screenshot",
-    "loop": "assets/loop-intentdesk.mp4",
-    "loopPoster": "assets/loop-intentdesk-poster.webp"
+    "imageCaption": "Application screenshot"
   },
   {
     "id": "crime-map",
+    "explainer": "assets/explainer-crime-map.mp4",
+    "explainerPoster": "assets/explainer-crime-map-poster.webp",
     "title": "Kerala Crime Map",
     "shortTitle": "Kerala Crime Map",
     "category": "data",
@@ -211,12 +215,12 @@ window.portfolioProjects = [
       "Sources & exports"
     ],
     "imageKind": "screenshot",
-    "imageCaption": "Application screenshot",
-    "loop": "assets/loop-crime-map.mp4",
-    "loopPoster": "assets/loop-crime-map-poster.webp"
+    "imageCaption": "Application screenshot"
   },
   {
     "id": "laliga-ml",
+    "explainer": "assets/explainer-laliga-ml.mp4",
+    "explainerPoster": "assets/explainer-laliga-ml-poster.webp",
     "title": "La Liga ML Forecasting",
     "shortTitle": "La Liga ML",
     "category": "data",
@@ -280,12 +284,12 @@ window.portfolioProjects = [
       "Chronological splits",
       "Frozen comparison"
     ],
-    "imageKind": "concept",
-    "loop": "assets/loop-laliga-ml.mp4",
-    "loopPoster": "assets/loop-laliga-ml-poster.webp"
+    "imageKind": "concept"
   },
   {
     "id": "lillys-pos",
+    "explainer": "assets/explainer-lillys-pos.mp4",
+    "explainerPoster": "assets/explainer-lillys-pos-poster.webp",
     "title": "Lilly's POS",
     "category": "web",
     "discipline": "Full-Stack Development",
@@ -357,6 +361,8 @@ window.portfolioProjects = [
   },
   {
     "id": "ev-sites",
+    "explainer": "assets/explainer-ev-sites.mp4",
+    "explainerPoster": "assets/explainer-ev-sites-poster.webp",
     "title": "Thrissur EV Site Selection",
     "category": "data",
     "discipline": "GIS & Machine Learning",
@@ -420,6 +426,8 @@ window.portfolioProjects = [
   },
   {
     "id": "cooksmart",
+    "explainer": "assets/explainer-cooksmart.mp4",
+    "explainerPoster": "assets/explainer-cooksmart-poster.webp",
     "title": "CookSmart",
     "category": "web",
     "discipline": "Web Design & Development",
@@ -482,6 +490,8 @@ window.portfolioProjects = [
   },
   {
     "id": "smile-dental",
+    "explainer": "assets/explainer-smile-dental.mp4",
+    "explainerPoster": "assets/explainer-smile-dental-poster.webp",
     "title": "Smile Dental",
     "category": "web",
     "discipline": "Full-Stack Development",
@@ -546,6 +556,8 @@ window.portfolioProjects = [
   },
   {
     "id": "meme-coin-lab",
+    "explainer": "assets/explainer-meme-coin-lab.mp4",
+    "explainerPoster": "assets/explainer-meme-coin-lab-poster.webp",
     "title": "Meme Coin Lab",
     "shortTitle": "Meme Coin Lab",
     "category": "automation",
@@ -615,6 +627,8 @@ window.portfolioProjects = [
   },
   {
     "id": "forex-demo",
+    "explainer": "assets/explainer-forex-demo.mp4",
+    "explainerPoster": "assets/explainer-forex-demo-poster.webp",
     "title": "Forex Demo Research Platform",
     "shortTitle": "Forex Demo",
     "category": "automation",

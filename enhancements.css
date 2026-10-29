@@ -84,10 +84,16 @@ html:has(body.motion-paused){scroll-behavior:auto}
 .spotlight-image{position:relative}
 .spotlight-loop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease-out;pointer-events:none}
 .has-loop .spotlight-loop{opacity:1}.has-loop .spotlight-image img{opacity:0}
-.cursor-glow,.cursor-ring{position:fixed;left:0;top:0;border-radius:50%;pointer-events:none;opacity:0}
-.cursor-glow{width:520px;height:520px;margin:-260px 0 0 -260px;background:radial-gradient(circle,#354bdf26,transparent 65%);mix-blend-mode:multiply;z-index:1;transition:opacity .4s}
-:root[data-theme=dark] .cursor-glow{mix-blend-mode:screen;background:radial-gradient(circle,#a1afff1f,transparent 65%)}
-.cursor-ring{width:34px;height:34px;margin:-17px 0 0 -17px;border:1.5px solid var(--blue);z-index:200;transition:opacity .2s,scale .25s cubic-bezier(.22,1,.36,1),background-color .25s}
-.cursor-fx .cursor-glow,.cursor-fx .cursor-ring{opacity:1}.cursor-hot .cursor-ring{scale:1.8;background-color:#354bdf14}
-.navigation-panel[open]~.cursor-ring,.motion-paused .cursor-glow,.motion-paused .cursor-ring{opacity:0}
-@media(prefers-reduced-motion:reduce){.cursor-glow,.cursor-ring,.spotlight-loop{display:none}}
+.cursor-thread{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:200}
+.row-image video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease-out;pointer-events:none}
+.row-image:has(video){aspect-ratio:1.3}.row-image.playing video{opacity:1}.row-image.playing img,.row-image.playing .row-image-note{opacity:0}
+@media(prefers-reduced-motion:reduce){.cursor-thread,.spotlight-loop,.row-image video{display:none}}
+/* Phones: lighter network shows more strongly behind the shorter portrait; larger index and tap targets. */
+@media(max-width:720px){.hero-field.webgl-ready{opacity:.55}.project-index{font-size:12px}.notes-topics a{min-height:44px;display:inline-flex;align-items:center}.device-copy .text-link,.network-strip .text-link{min-height:44px;display:inline-flex;align-items:center}}
+/* React Bits-style effects, rebuilt in vanilla: proximity weight, dot grids, explainer player. */
+.hero .char{transition:font-weight .25s ease-out}
+.has-dot-grid{position:relative;isolation:isolate}
+.dot-grid{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.explainer video{aspect-ratio:1.3;max-height:80vh;object-fit:contain}
+.motion-paused .dot-grid{display:none}
+@media(prefers-reduced-motion:reduce){.dot-grid{display:none}.hero .char{transition:none}}

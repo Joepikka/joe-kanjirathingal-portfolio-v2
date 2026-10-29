@@ -6,7 +6,14 @@ export function pointerDepth(x,y,box){
   return {x:clamp((x-box.left)/box.width*2-1),y:clamp((y-box.top)/box.height*2-1)};
 }
 
-export const spotlightMedia=(project,animate)=>project?.loop&&animate?'loop':'image';
+export const spotlightMedia=(project,animate)=>project?.explainer&&animate?'loop':'image';
+
+// "96.24%" -> parts to count up to; anything that is not one plain number stays static.
+export function countParts(text){
+  const m=/^(\d{1,3}(?:,\d{3})*|\d+)(?:\.(\d+))?(%?)$/.exec(text);
+  if(!m)return null;
+  return {prefix:'',value:Number(m[1].replace(/,/g,'')+(m[2]?'.'+m[2]:'')),decimals:m[2]?.length||0,suffix:m[3]};
+}
 
 // Seeded so the hero network keeps the same shape on every visit.
 function random(seed){return()=>{seed=seed+0x6d2b79f5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}

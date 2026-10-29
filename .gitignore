@@ -8,3 +8,7 @@ dist/
 # HyperFrames working files
 motion/**/renders/
 motion/**/.hyperframes/
+
+motion/**/sfx-work/
+motion/**/review/
+motion/explainers/index.html

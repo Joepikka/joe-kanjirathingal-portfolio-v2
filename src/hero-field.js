@@ -2,14 +2,14 @@ import {BufferAttribute,BufferGeometry,CanvasTexture,Color,Group,LineBasicMateri
 import {fieldLayout} from './motion-policy.mjs';
 
 // Decorative network behind the hero portrait: nodes drift, part around the cursor and carry a signal pulse.
-export function mountHeroField(host,{enabled}){
+export function mountHeroField(host,{enabled,dust:dustCount=600}){
   const renderer=new WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,matchMedia("(pointer:fine)").matches?1.5:1));
   renderer.domElement.setAttribute('aria-hidden','true');
   host.append(renderer.domElement);
   const scene=new Scene(),group=new Group(),camera=new PerspectiveCamera(35,1,.1,20);
   camera.position.z=3.2;scene.add(group);
-  const {nodes,edges,dust,layerOf}=fieldLayout(innerWidth>1400?900:600,11);
+  const {nodes,edges,dust,layerOf}=fieldLayout(dustCount,11);
   const dot=document.createElement('canvas');dot.width=dot.height=64;
   const g=dot.getContext('2d');g.fillStyle='#fff';g.beginPath();g.arc(32,32,30,0,Math.PI*2);g.fill();
   const sprite=new CanvasTexture(dot);

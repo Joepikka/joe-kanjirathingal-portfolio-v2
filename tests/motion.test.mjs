@@ -12,9 +12,16 @@ test('decorative motion stops for pause, reduced motion, and a hidden document',
 });
 
 test('spotlight plays a loop only when the project has one and motion is allowed',()=>{
-  assert.equal(motion.spotlightMedia({loop:'a.mp4'},true),'loop');
-  assert.equal(motion.spotlightMedia({loop:'a.mp4'},false),'image');
+  assert.equal(motion.spotlightMedia({explainer:'a.mp4'},true),'loop');
+  assert.equal(motion.spotlightMedia({explainer:'a.mp4'},false),'image');
   assert.equal(motion.spotlightMedia({},true),'image');
+});
+
+test('count-up only animates plain numbers and keeps their format',()=>{
+  assert.deepEqual(motion.countParts('96.24%'),{prefix:'',value:96.24,decimals:2,suffix:'%'});
+  assert.deepEqual(motion.countParts('1,000'),{prefix:'',value:1000,decimals:0,suffix:''});
+  assert.deepEqual(motion.countParts('0.0074'),{prefix:'',value:.0074,decimals:4,suffix:''});
+  for(const text of ['135 / 1,000 (13.5%)','0 / 18','Human review for every request',''])assert.equal(motion.countParts(text),null);
 });
 
 test('hero field layout is deterministic, bounded and layered',()=>{

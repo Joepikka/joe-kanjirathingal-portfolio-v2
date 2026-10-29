@@ -1,6 +1,8 @@
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {canAnimate,pointerDepth,spotlightMedia} from './motion-policy.mjs';
+import {mountCursorThread} from './cursor-thread.js';
+import {initEffects} from './effects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,17 +28,18 @@ export function initMotion(projects){
     const tag=document.createElement('p');tag.className='hero-field-label';tag.innerHTML='<span class="field-status"></span> DATA <span>→</span> MODELS <span>→</span> APPLICATIONS';
     hero.append(tag);
   }
-  // WebGL network loads only for fine-pointer desktops; the SVG stays as the fallback.
+  // WebGL network: full on fine-pointer desktops, lighter on capable phones; skipped on Save-Data. The SVG stays as the fallback.
   let network,networkRequested=false;
+  const lightDevice=()=>navigator.connection?.saveData||(navigator.hardwareConcurrency||4)<4||(navigator.deviceMemory||4)<3;
   function loadNetwork(){
-    if(networkRequested||!hero||!fine.matches||!enabled())return;
+    if(networkRequested||!hero||!enabled()||(!fine.matches&&lightDevice()))return;
     networkRequested=true;
     const field=hero.querySelector('.hero-field');
-    import('./hero-field.js').then(({mountHeroField})=>{network=mountHeroField(field,{enabled});field.classList.add('webgl-ready');}).catch(()=>{});
+    import('./hero-field.js').then(({mountHeroField})=>{network=mountHeroField(field,{enabled,dust:fine.matches?(innerWidth>1400?900:600):220});field.classList.add('webgl-ready');}).catch(()=>{});
   }
 
   let showcase,showcaseImage,showcaseLoop,showcaseTitle,showcaseCount,currentId;
-  const rows=list?[...list.querySelectorAll('.project-row')]:[];
+  const rows=list?[...list.querySelectorAll('.project-row')]:[],rowVideos=[];
   if(list){
     const wrap=document.createElement('div');wrap.className='work-showcase';list.before(wrap);wrap.append(list);
     showcase=document.createElement('a');showcase.className='project-spotlight';
@@ -50,6 +53,11 @@ export function initMotion(projects){
       const thumb=document.createElement('div');thumb.className='row-image';thumb.style.background=project.color;
       const img=document.createElement('img');img.src=project.imageSmall||project.image;img.alt=project.imageAlt||`${project.title} project preview`;img.loading='lazy';img.width=project.mediaWidth;img.height=project.mediaHeight;thumb.append(img);row.append(thumb);
       if(project.imageKind==='concept'){const note=document.createElement('span');note.className='row-image-note';note.textContent='Concept illustration';thumb.append(note);}
+      if(project.explainer){
+        const video=document.createElement('video');
+        Object.assign(video,{muted:true,loop:true,playsInline:true,preload:'none',poster:project.explainerPoster||''});
+        video.setAttribute('aria-hidden','true');video.dataset.src=project.explainer;thumb.append(video);rowVideos.push(video);
+      }
       row.addEventListener('pointerenter',()=>{if(fine.matches)selectProject(project.id);});
       row.addEventListener('focus',()=>selectProject(project.id));
     });
@@ -76,16 +84,33 @@ export function initMotion(projects){
     showcase.classList.toggle('has-loop',loop);
     showcase.querySelector('.spotlight-top>span').textContent=loop?'HOW IT WORKS · MOTION EXPLAINER':project.imageKind==='concept'?'CONCEPT ILLUSTRATION':'PROJECT IN FOCUS';
     if(!loop){showcaseLoop.pause();return;}
-    if(!showcaseLoop.src.endsWith(project.loop)){showcaseLoop.poster=project.loopPoster||'';showcaseLoop.src=project.loop;}
+    if(!showcaseLoop.src.endsWith(project.explainer)){showcaseLoop.poster=project.explainerPoster||'';showcaseLoop.src=project.explainer;}
     // AbortError only means a newer project replaced this source mid-load.
     showcaseLoop.play().catch(error=>{if(error.name!=='AbortError')showcase.classList.remove('has-loop');});
   }
 
-  // Soft cursor glow and trailing ring; the system cursor stays visible.
-  const glow=document.createElement('div');glow.className='cursor-glow';glow.setAttribute('aria-hidden','true');
-  const ring=document.createElement('div');ring.className='cursor-ring';ring.setAttribute('aria-hidden','true');
-  document.body.append(glow,ring);
-  let moveGlowX,moveGlowY,moveRingX,moveRingY;
+  const thread=mountCursorThread();
+
+  // Phones and tablets: the explainer in view plays muted in its card; one at a time, never on Save-Data.
+  const inView=new Set();
+  function syncRowVideos(){
+    const allowed=enabled()&&!desktop.matches&&!navigator.connection?.saveData;
+    const best=allowed?[...inView].sort((a,b)=>b.ratio-a.ratio)[0]?.video:null;
+    rowVideos.forEach(video=>{
+      const play=video===best;
+      video.parentElement.classList.toggle('playing',play);
+      if(play){if(!video.src)video.src=video.dataset.src;video.play().catch(()=>video.parentElement.classList.remove('playing'));}
+      else if(!video.paused)video.pause();
+    });
+  }
+  const rowObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const item=[...inView].find(i=>i.video===entry.target);if(item)inView.delete(item);
+      if(entry.intersectionRatio>=.6)inView.add({video:entry.target,ratio:entry.intersectionRatio});
+    });
+    syncRowVideos();
+  },{threshold:[0,.6,.8,1]});
+  rowVideos.forEach(video=>rowObserver.observe(video));
 
   // A single control on every page shares the existing pause state.
   if(!document.querySelector('.motion-toggle')){
@@ -129,9 +154,7 @@ export function initMotion(projects){
       }
       gsap.to(progress,{scaleX:1,ease:'none',scrollTrigger:{start:0,end:()=>ScrollTrigger.maxScroll(window),scrub:true}});
       if(fine.matches){
-        document.body.classList.add('cursor-fx');
-        moveGlowX=gsap.quickTo(glow,'x',{duration:.9,ease:'power3.out'});moveGlowY=gsap.quickTo(glow,'y',{duration:.9,ease:'power3.out'});
-        moveRingX=gsap.quickTo(ring,'x',{duration:.28,ease:'power3.out'});moveRingY=gsap.quickTo(ring,'y',{duration:.28,ease:'power3.out'});
+        thread.enable();
         if(depth){
           movePortraitX=gsap.quickTo(depth,'x',{duration:.65,ease:'power3.out'});movePortraitY=gsap.quickTo(depth,'y',{duration:.65,ease:'power3.out'});
           moveFieldX=gsap.quickTo('.hero-field','x',{duration:.8,ease:'power3.out'});moveFieldY=gsap.quickTo('.hero-field','y',{duration:.8,ease:'power3.out'});
@@ -147,25 +170,23 @@ export function initMotion(projects){
   }
 
   function stop(){
-    context?.revert();context=null;document.body.classList.remove('motion-enhanced','cursor-fx','cursor-hot');
-    moveGlowX=moveGlowY=moveRingX=moveRingY=null;
+    context?.revert();context=null;document.body.classList.remove('motion-enhanced');
+    thread.disable();
     hovering=false;showcase?.classList.remove('pointer-active');
     // Also finish a crossfade created outside the context before pausing.
     if(showcaseImage){gsap.killTweensOf(showcaseImage);gsap.set(showcaseImage,{clearProps:'opacity,transform'});}
   }
-  function refresh(){stop();syncControl();if(enabled())start();syncLoop();loadNetwork();network?.wake();}
+  function refresh(){stop();syncControl();if(enabled())start();syncLoop();syncRowVideos();loadNetwork();network?.wake();}
   hero?.addEventListener('pointermove',event=>{
-    if(!enabled()||!fine.matches)return;
+    if(!enabled())return;
     const p=pointerDepth(event.clientX,event.clientY,hero.getBoundingClientRect());
-    movePortraitX?.(p.x*10);movePortraitY?.(p.y*7);moveFieldX?.(-p.x*22);moveFieldY?.(-p.y*16);network?.setPointer(p);
+    // A finger dragging across the hero parts the network too.
+    network?.setPointer(p);
+    if(!fine.matches)return;
+    movePortraitX?.(p.x*10);movePortraitY?.(p.y*7);moveFieldX?.(-p.x*22);moveFieldY?.(-p.y*16);
   },{passive:true});
+  for(const type of ['pointerup','pointercancel'])hero?.addEventListener(type,event=>{if(event.pointerType!=='mouse')network?.setPointer(null);},{passive:true});
   hero?.addEventListener('pointerleave',()=>{network?.setPointer(null);if(enabled()&&fine.matches){movePortraitX?.(0);movePortraitY?.(0);moveFieldX?.(0);moveFieldY?.(0);}});
-  addEventListener('pointermove',event=>{
-    if(!moveGlowX)return;
-    moveGlowX(event.clientX);moveGlowY(event.clientY);moveRingX(event.clientX);moveRingY(event.clientY);
-    document.body.classList.toggle('cursor-hot',!!event.target.closest?.('a,button,select,input,[role=button]'));
-  },{passive:true});
-  document.documentElement.addEventListener('pointerleave',()=>document.body.classList.remove('cursor-hot'));
   showcase?.addEventListener('pointermove',event=>{
     if(!enabled()||!fine.matches)return;
     const box=showcase.getBoundingClientRect(),p=pointerDepth(event.clientX,event.clientY,box);
@@ -188,5 +209,6 @@ export function initMotion(projects){
   addEventListener('load',()=>ScrollTrigger.refresh(),{once:true});
   document.fonts?.ready.then(()=>ScrollTrigger.refresh());
   addEventListener('pagehide',stop);addEventListener('pageshow',event=>{if(event.persisted)refresh();});
+  initEffects(enabled);
   refresh();
 }
