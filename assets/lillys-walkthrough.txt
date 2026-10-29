@@ -1,0 +1,13 @@
+00–12 seconds | Lilly’s POS / From guest to counter
+Actual hosted guest interface · restored 18 October 2026
+A café prototype connects the guest interface with daily operations. Demo prices; cash-only workflows.
+
+12–24 seconds | Explore the café menu
+Actual hosted guest interface · no customer data shown
+Browse the menu and item options. This recording creates no order, receipt or payment.
+
+24–36 seconds | Check the item options
+Actual guest item options · no order or payment created
+Review the available options before an order. The full prototype also covers kitchen tracking, tables and daily operations.
+
+Silent captioned screenshot walkthrough. No narration or customer performance measurements.

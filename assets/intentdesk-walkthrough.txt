@@ -1,0 +1,13 @@
+00–12 seconds | IntentDesk / A suggestion, then a person
+Genuine repository screenshot · automated interface verification
+The interface suggests an intent. A reviewer checks or corrects it before saving.
+
+12–24 seconds | A recorded local handoff
+Genuine repository screenshot · SQLite review history
+The explicit decision is recorded locally. This is an illustrative handoff, not an action in a bank system.
+
+24–36 seconds | A useful result. A meaningful limit.
+Published Milestone 5 results · primary model selected before final comparison
+Known-intent accuracy reached 96.24%. Unsupported-input failures kept automatic routing disabled.
+
+Silent captioned screenshot walkthrough. No narration or customer performance measurements.
