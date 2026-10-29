@@ -1,6 +1,6 @@
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import {canAnimate,pointerDepth} from './motion-policy.mjs';
+import {canAnimate,pointerDepth,spotlightMedia} from './motion-policy.mjs';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,15 +26,23 @@ export function initMotion(projects){
     const tag=document.createElement('p');tag.className='hero-field-label';tag.innerHTML='<span class="field-status"></span> DATA <span>→</span> MODELS <span>→</span> APPLICATIONS';
     hero.append(tag);
   }
+  // WebGL network loads only for fine-pointer desktops; the SVG stays as the fallback.
+  let network,networkRequested=false;
+  function loadNetwork(){
+    if(networkRequested||!hero||!fine.matches||!enabled())return;
+    networkRequested=true;
+    const field=hero.querySelector('.hero-field');
+    import('./hero-field.js').then(({mountHeroField})=>{network=mountHeroField(field,{enabled});field.classList.add('webgl-ready');}).catch(()=>{});
+  }
 
-  let showcase,showcaseImage,showcaseTitle,showcaseCount,currentId;
+  let showcase,showcaseImage,showcaseLoop,showcaseTitle,showcaseCount,currentId;
   const rows=list?[...list.querySelectorAll('.project-row')]:[];
   if(list){
     const wrap=document.createElement('div');wrap.className='work-showcase';list.before(wrap);wrap.append(list);
     showcase=document.createElement('a');showcase.className='project-spotlight';
-    showcase.innerHTML='<div class="spotlight-top"><span>PROJECT IN FOCUS</span><span class="spotlight-count"></span></div><div class="spotlight-image"><img alt="" width="1440" height="900" decoding="async" loading="lazy"></div><div class="spotlight-bottom"><span class="spotlight-title"></span><span class="spotlight-cta">Read case study ↗</span></div><span class="spotlight-cursor" aria-hidden="true">Explore ↗</span>';
+    showcase.innerHTML='<div class="spotlight-top"><span>PROJECT IN FOCUS</span><span class="spotlight-count"></span></div><div class="spotlight-image"><img alt="" width="1440" height="900" decoding="async" loading="lazy"><video class="spotlight-loop" muted loop playsinline preload="none" aria-hidden="true" width="780" height="600"></video></div><div class="spotlight-bottom"><span class="spotlight-title"></span><span class="spotlight-cta">Read case study ↗</span></div><span class="spotlight-cursor" aria-hidden="true">Explore ↗</span>';
     wrap.prepend(showcase);
-    showcaseImage=showcase.querySelector('img');showcaseTitle=showcase.querySelector('.spotlight-title');showcaseCount=showcase.querySelector('.spotlight-count');
+    showcaseImage=showcase.querySelector('img');showcaseLoop=showcase.querySelector('video');showcaseTitle=showcase.querySelector('.spotlight-title');showcaseCount=showcase.querySelector('.spotlight-count');
     rows.forEach((row,index)=>{
       const project=projects.find(p=>p.id===row.dataset.project);
       if(!project)return;
@@ -54,12 +62,30 @@ export function initMotion(projects){
     currentId=id;
     showcase.href=`projects/${id}.html`;showcase.setAttribute('aria-label',`Read ${project.title} case study`);
     showcaseImage.src=project.imageSmall||project.image;showcaseTitle.textContent=project.shortTitle||project.title;
-    showcase.querySelector('.spotlight-top>span').textContent=project.imageKind==='concept'?'CONCEPT ILLUSTRATION':'PROJECT IN FOCUS';
     showcase.style.setProperty('--project-color',project.color);
+    syncLoop();
     showcaseCount.textContent=`${String(rows.findIndex(r=>r.dataset.project===id)+1).padStart(2,'0')} / ${String(rows.length).padStart(2,'0')}`;
     rows.forEach(row=>row.classList.toggle('is-current',row.dataset.project===id));
-    if(enabled())gsap.fromTo(showcaseImage,{opacity:.35,scale:1.025},{opacity:1,scale:1,duration:.28,ease:'power2.out',overwrite:true,clearProps:'opacity,transform'});
+    if(enabled()&&!showcase.classList.contains('has-loop'))gsap.fromTo(showcaseImage,{opacity:.35,scale:1.025},{opacity:1,scale:1,duration:.28,ease:'power2.out',overwrite:true,clearProps:'opacity,transform'});
   }
+
+  // Muted explainer loops replace the still only while motion is allowed; pausing restores the image.
+  function syncLoop(){
+    const project=projects.find(p=>p.id===currentId);if(!project||!showcaseLoop)return;
+    const loop=spotlightMedia(project,enabled()&&fine.matches)==='loop';
+    showcase.classList.toggle('has-loop',loop);
+    showcase.querySelector('.spotlight-top>span').textContent=loop?'HOW IT WORKS · MOTION EXPLAINER':project.imageKind==='concept'?'CONCEPT ILLUSTRATION':'PROJECT IN FOCUS';
+    if(!loop){showcaseLoop.pause();return;}
+    if(!showcaseLoop.src.endsWith(project.loop)){showcaseLoop.poster=project.loopPoster||'';showcaseLoop.src=project.loop;}
+    // AbortError only means a newer project replaced this source mid-load.
+    showcaseLoop.play().catch(error=>{if(error.name!=='AbortError')showcase.classList.remove('has-loop');});
+  }
+
+  // Soft cursor glow and trailing ring; the system cursor stays visible.
+  const glow=document.createElement('div');glow.className='cursor-glow';glow.setAttribute('aria-hidden','true');
+  const ring=document.createElement('div');ring.className='cursor-ring';ring.setAttribute('aria-hidden','true');
+  document.body.append(glow,ring);
+  let moveGlowX,moveGlowY,moveRingX,moveRingY;
 
   // A single control on every page shares the existing pause state.
   if(!document.querySelector('.motion-toggle')){
@@ -103,6 +129,9 @@ export function initMotion(projects){
       }
       gsap.to(progress,{scaleX:1,ease:'none',scrollTrigger:{start:0,end:()=>ScrollTrigger.maxScroll(window),scrub:true}});
       if(fine.matches){
+        document.body.classList.add('cursor-fx');
+        moveGlowX=gsap.quickTo(glow,'x',{duration:.9,ease:'power3.out'});moveGlowY=gsap.quickTo(glow,'y',{duration:.9,ease:'power3.out'});
+        moveRingX=gsap.quickTo(ring,'x',{duration:.28,ease:'power3.out'});moveRingY=gsap.quickTo(ring,'y',{duration:.28,ease:'power3.out'});
         if(depth){
           movePortraitX=gsap.quickTo(depth,'x',{duration:.65,ease:'power3.out'});movePortraitY=gsap.quickTo(depth,'y',{duration:.65,ease:'power3.out'});
           moveFieldX=gsap.quickTo('.hero-field','x',{duration:.8,ease:'power3.out'});moveFieldY=gsap.quickTo('.hero-field','y',{duration:.8,ease:'power3.out'});
@@ -118,18 +147,25 @@ export function initMotion(projects){
   }
 
   function stop(){
-    context?.revert();context=null;document.body.classList.remove('motion-enhanced');
+    context?.revert();context=null;document.body.classList.remove('motion-enhanced','cursor-fx','cursor-hot');
+    moveGlowX=moveGlowY=moveRingX=moveRingY=null;
     hovering=false;showcase?.classList.remove('pointer-active');
     // Also finish a crossfade created outside the context before pausing.
     if(showcaseImage){gsap.killTweensOf(showcaseImage);gsap.set(showcaseImage,{clearProps:'opacity,transform'});}
   }
-  function refresh(){stop();syncControl();if(enabled())start();}
+  function refresh(){stop();syncControl();if(enabled())start();syncLoop();loadNetwork();network?.wake();}
   hero?.addEventListener('pointermove',event=>{
     if(!enabled()||!fine.matches)return;
     const p=pointerDepth(event.clientX,event.clientY,hero.getBoundingClientRect());
-    movePortraitX?.(p.x*10);movePortraitY?.(p.y*7);moveFieldX?.(-p.x*22);moveFieldY?.(-p.y*16);
+    movePortraitX?.(p.x*10);movePortraitY?.(p.y*7);moveFieldX?.(-p.x*22);moveFieldY?.(-p.y*16);network?.setPointer(p);
   },{passive:true});
-  hero?.addEventListener('pointerleave',()=>{if(enabled()&&fine.matches){movePortraitX?.(0);movePortraitY?.(0);moveFieldX?.(0);moveFieldY?.(0);}});
+  hero?.addEventListener('pointerleave',()=>{network?.setPointer(null);if(enabled()&&fine.matches){movePortraitX?.(0);movePortraitY?.(0);moveFieldX?.(0);moveFieldY?.(0);}});
+  addEventListener('pointermove',event=>{
+    if(!moveGlowX)return;
+    moveGlowX(event.clientX);moveGlowY(event.clientY);moveRingX(event.clientX);moveRingY(event.clientY);
+    document.body.classList.toggle('cursor-hot',!!event.target.closest?.('a,button,select,input,[role=button]'));
+  },{passive:true});
+  document.documentElement.addEventListener('pointerleave',()=>document.body.classList.remove('cursor-hot'));
   showcase?.addEventListener('pointermove',event=>{
     if(!enabled()||!fine.matches)return;
     const box=showcase.getBoundingClientRect(),p=pointerDepth(event.clientX,event.clientY,box);

@@ -11,6 +11,20 @@ test('decorative motion stops for pause, reduced motion, and a hidden document',
   for(const key of ['paused','reduced','hidden']) assert.equal(motion.canAnimate({[key]:true}),false);
 });
 
+test('spotlight plays a loop only when the project has one and motion is allowed',()=>{
+  assert.equal(motion.spotlightMedia({loop:'a.mp4'},true),'loop');
+  assert.equal(motion.spotlightMedia({loop:'a.mp4'},false),'image');
+  assert.equal(motion.spotlightMedia({},true),'image');
+});
+
+test('hero field layout is deterministic, bounded and layered',()=>{
+  const a=motion.fieldLayout(300,7),b=motion.fieldLayout(300,7);
+  assert.deepEqual(a,b);
+  assert.equal(a.dust.length,300*3);
+  assert.ok([...a.dust,...a.nodes].every(v=>v>=-1&&v<=1));
+  assert.ok(a.edges.length>0&&a.edges.every(([i,j])=>i<a.nodes.length/3&&j<a.nodes.length/3));
+});
+
 test('pointer depth stays bounded outside the surface and handles empty bounds',()=>{
   assert.equal(typeof motion.pointerDepth,'function');
   const box={left:100,top:50,width:400,height:200};

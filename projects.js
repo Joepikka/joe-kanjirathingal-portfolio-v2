@@ -142,7 +142,9 @@ window.portfolioProjects = [
       "Human decision"
     ],
     "imageKind": "screenshot",
-    "imageCaption": "Application screenshot"
+    "imageCaption": "Application screenshot",
+    "loop": "assets/loop-intentdesk.mp4",
+    "loopPoster": "assets/loop-intentdesk-poster.webp"
   },
   {
     "id": "crime-map",
@@ -209,7 +211,9 @@ window.portfolioProjects = [
       "Sources & exports"
     ],
     "imageKind": "screenshot",
-    "imageCaption": "Application screenshot"
+    "imageCaption": "Application screenshot",
+    "loop": "assets/loop-crime-map.mp4",
+    "loopPoster": "assets/loop-crime-map-poster.webp"
   },
   {
     "id": "laliga-ml",
@@ -276,7 +280,9 @@ window.portfolioProjects = [
       "Chronological splits",
       "Frozen comparison"
     ],
-    "imageKind": "concept"
+    "imageKind": "concept",
+    "loop": "assets/loop-laliga-ml.mp4",
+    "loopPoster": "assets/loop-laliga-ml-poster.webp"
   },
   {
     "id": "lillys-pos",

@@ -1,0 +1,81 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/dm-sans.woff2") format("woff2"); font-weight: 100 1000; }
+    #root { position: absolute; inset: 0; background: #e0ddeb; color: #1c1d20; font-family: "DM Sans", sans-serif; overflow: hidden; }
+    #id-head { position: absolute; left: 64px; right: 64px; top: 56px; display: flex; justify-content: space-between; font-size: 20px; letter-spacing: .14em; }
+    #id-head span:last-child { color: #55585d; }
+    #id-card { position: absolute; left: 64px; top: 150px; width: 560px; padding: 30px 34px; background: #fff; border-radius: 6px; box-shadow: 0 18px 40px #1c1d2014; }
+    #id-card small { display: block; font-size: 20px; letter-spacing: .1em; color: #626469; margin-bottom: 14px; }
+    #id-text { font-size: 40px; line-height: 1.2; letter-spacing: -.03em; clip-path: inset(0 100% 0 0); }
+    #id-vector { position: absolute; left: 690px; top: 150px; width: 286px; height: 180px; display: flex; align-items: flex-end; gap: 7px; }
+    #id-vector i { flex: 1; background: #354bdf; transform-origin: bottom; border-radius: 2px 2px 0 0; }
+    #id-vector-label { position: absolute; left: 690px; top: 346px; font-size: 20px; letter-spacing: .1em; color: #55585d; }
+    #id-suggest { position: absolute; left: 64px; top: 390px; width: 560px; }
+    .id-row { display: grid; grid-template-columns: 290px 1fr 64px; align-items: center; gap: 18px; padding: 13px 0; border-top: 1px solid #1c1d2022; font-size: 27px; letter-spacing: -.02em; }
+    .id-track { height: 12px; background: #1c1d2014; }
+    .id-bar { height: 100%; background: #1c1d20; transform-origin: left; }
+    .id-row:first-child .id-bar { background: #354bdf; }
+    .id-row b { font-weight: 400; text-align: right; font-variant-numeric: tabular-nums; }
+    #id-note { margin-top: 10px; font-size: 20px; color: #626469; letter-spacing: .04em; }
+    #id-decide { position: absolute; left: 690px; top: 410px; width: 286px; }
+    .id-btn { display: block; text-align: center; padding: 16px; border-radius: 50px; font-size: 26px; margin-bottom: 14px; border: 1px solid #1c1d2033; }
+    #id-approve { background: #1c1d20; color: #fff; border-color: #1c1d20; }
+    #id-stamp { margin-top: 8px; font-size: 24px; color: #354bdf; letter-spacing: -.01em; }
+    #id-cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: #354bdf; box-shadow: 0 0 0 8px #354bdf33; }
+    #id-steps { position: absolute; left: 64px; right: 64px; top: 668px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; font-size: 22px; letter-spacing: -.02em; }
+    #id-steps span { padding-top: 20px; }
+    #id-rail { position: absolute; left: 64px; right: 64px; top: 662px; height: 2px; background: #1c1d2022; }
+    #id-progress { height: 100%; background: #354bdf; transform-origin: left; }
+  </style>
+  <div id="root" data-composition-id="intentdesk" data-width="1040" data-height="800">
+    <div id="id-head" class="clip" data-start="0" data-duration="8"><span>INTENTDESK · HOW IT WORKS</span><span>ILLUSTRATIVE FLOW</span></div>
+    <div id="id-card" class="clip" data-start="0" data-duration="8"><small>CUSTOMER REQUEST</small><p id="id-text">My card was charged twice for one order.</p></div>
+    <div id="id-vector" class="clip" data-start="0" data-duration="8"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <p id="id-vector-label" class="clip" data-start="0" data-duration="8">SENTENCE EMBEDDING</p>
+    <div id="id-suggest" class="clip" data-start="0" data-duration="8">
+      <div class="id-row"><span>Duplicate charge</span><div class="id-track"><div class="id-bar" style="width:72%"></div></div><b>0.72</b></div>
+      <div class="id-row"><span>Refund request</span><div class="id-track"><div class="id-bar" style="width:18%"></div></div><b>0.18</b></div>
+      <div class="id-row"><span>Card payment issue</span><div class="id-track"><div class="id-bar" style="width:6%"></div></div><b>0.06</b></div>
+      <p id="id-note">Example scores · 150-category intent benchmark</p>
+    </div>
+    <div id="id-decide" class="clip" data-start="0" data-duration="8"><span id="id-approve" class="id-btn">Approve</span><span class="id-btn">Change intent</span><p id="id-stamp">✓ Decision recorded</p></div>
+    <div id="id-cursor" class="clip" data-start="0" data-duration="8"></div>
+    <div id="id-rail" class="clip" data-start="0" data-duration="8"><div id="id-progress"></div></div>
+    <div id="id-steps" class="clip" data-start="0" data-duration="8"><span>Request</span><span>Frozen embeddings</span><span>Calibrated suggestion</span><span>Human decision</span></div>
+  </div>
+  <script>
+    (() => {
+      const tl = gsap.timeline({ paused: true });
+      const ease = "power3.out";
+      const heights = [0.42, 0.78, 0.31, 0.64, 0.92, 0.5, 0.27, 0.71, 0.58, 0.36, 0.85, 0.44, 0.68, 0.29, 0.6, 0.81];
+      const bars = gsap.utils.toArray("#id-vector i");
+      bars.forEach((bar, i) => gsap.set(bar, { height: heights[i] * 180 }));
+      const steps = gsap.utils.toArray("#id-steps span");
+      // Start state equals end state so the 8 s file loops without a seam.
+      tl.fromTo(steps, { opacity: 0.32 }, { opacity: 0.32, duration: 0.01 }, 0);
+      tl.fromTo("#id-progress", { scaleX: 0 }, { scaleX: 1, duration: 7, ease: "none" }, 0);
+      [0, 1.75, 3.5, 5.25].forEach((at, i) => tl.to(steps[i], { opacity: 1, color: "#354bdf", duration: 0.3 }, at));
+      // 1 · request
+      tl.fromTo("#id-card", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease }, 0.1);
+      tl.fromTo("#id-text", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.1, ease: "power1.inOut" }, 0.45);
+      // 2 · embedding
+      tl.fromTo(bars, { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease, stagger: 0.04 }, 1.8);
+      tl.fromTo("#id-vector-label", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 2.0);
+      // 3 · calibrated suggestion
+      tl.fromTo(".id-row", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease, stagger: 0.12 }, 3.55);
+      tl.fromTo(".id-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease, stagger: 0.12 }, 3.7);
+      tl.fromTo("#id-note", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.3);
+      // 4 · human decision
+      tl.fromTo("#id-decide .id-btn", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease, stagger: 0.1 }, 5.3);
+      tl.fromTo("#id-cursor", { opacity: 0, x: 960, y: 760 }, { opacity: 1, x: 932, y: 446, duration: 0.8, ease: "power2.inOut" }, 5.45);
+      tl.to("#id-cursor", { scale: 0.7, duration: 0.1, yoyo: true, repeat: 1 }, 6.25);
+      tl.to("#id-approve", { backgroundColor: "#354bdf", borderColor: "#354bdf", duration: 0.2 }, 6.3);
+      tl.fromTo("#id-stamp", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease }, 6.4);
+      // Reset to the opening frame.
+      tl.to(["#id-card", "#id-vector", "#id-vector-label", "#id-suggest", "#id-decide", "#id-cursor"], { opacity: 0, duration: 0.45, ease: "power1.in" }, 7.25);
+      tl.to(steps, { opacity: 0.32, color: "#1c1d20", duration: 0.45 }, 7.25);
+      tl.to("#id-progress", { scaleX: 0, duration: 0.45, ease: "power2.inOut" }, 7.25);
+      window.__timelines["intentdesk"] = tl;
+    })();
+  </script>
+</template>

@@ -388,6 +388,8 @@ Text links pair a label with a thin arrow. A one-pixel underline grows beneath t
 
 The desktop hero name travels horizontally in a linear loop (28s); the mobile full name remains static. A first-visit intro leaves upward over (1.15s), and the image ribbon tracks visible scroll within a limited horizontal range. The shared easing is (cubic-bezier(.22, 1, .36, 1)); most state transitions run between (0.25s) and (0.8s).
 
+Phase 1 motion (October 2026) adds three fine-pointer desktop layers. A WebGL node network behind the hero portrait drifts, parts around the cursor and carries a blue pulse across its five layers; the SVG field remains the fallback. IntentDesk, Kerala Crime Map and La Liga ML show 8-second muted explainer loops in the project stage, labelled "How it works · Motion explainer" and "Illustrative flow"; their source lives in `motion/loops` (HyperFrames). A soft blue glow and trailing ring follow the pointer while the system cursor stays visible. Touch screens, paused motion and reduced motion keep the still image, no WebGL and no cursor layers.
+
 The visible pause control pauses CSS animations and disables magnetic and scroll-ribbon movement. The reduced-motion preference removes animations, transitions, hover previews and smooth scrolling, and changes the desktop hero name to a single readable static treatment. Native walkthrough playback remains visitor-controlled.
 
 ## Do's and Don'ts
