@@ -1,6 +1,10 @@
-# Joe Kanjirathingal — interactive portfolio preview
+# Joe Kanjirathingal — Portfolio Version 2
 
-This is an isolated version of the existing portfolio. The live production website has not been replaced.
+An independently published Version 2 of Joe's portfolio, with cursor interactions, scroll animation, responsive project galleries and an interactive lab. The original portfolio remains unchanged.
+
+- Version 2 website: https://joe-kanjirathingal-portfolio-v2.vercel.app/
+- Version 2 source: https://github.com/Joepikka/joe-kanjirathingal-portfolio-v2
+- Original website: https://joe-kanjirathingal-portfolio.vercel.app/
 
 ## Run this version
 
@@ -26,7 +30,7 @@ Open `http://127.0.0.1:4173/`. Run `npm test` after building. No API keys are re
 
 Original facts live in `projects.js` and the root HTML pages. New controls are in `src/enhancements.js`, graphics in `src/scenes.js`, and responsive/theme extensions in `enhancements.css`. `scripts/build.mjs` generates `dist/`, bundles Three.js locally, and creates share images from original screenshots.
 
-Deploy `dist/` as a separate preview, or let Vercel run `npm ci` and `npm run build`. Vercel's `VERCEL_URL` supplies the preview origin for share images; `SITE_URL` can override it. This preview deliberately includes `noindex` metadata and a blocking robots.txt. Remove that preview-only indexing restriction only when the user approves replacement, and rebuild for the final domain.
+Deploy `dist/`, or let the separate Vercel project `joe-kanjirathingal-portfolio-v2` run `npm ci` and `npm run build`. Vercel's `VERCEL_URL` supplies the build origin for share images; `SITE_URL` can override it. This parallel edition retains `noindex` metadata and a blocking robots.txt so it does not compete with the original portfolio in search. Publishing V2 does not replace or modify the original site.
 
 Synthetic sentences/coordinates are explicitly illustrative. They are not IntentDesk embeddings, benchmark outputs, or new research claims. The original project metrics and limitations are preserved.
 

@@ -4,6 +4,11 @@ import {initMotion} from './motion.js';
 if(document.readyState==='loading') await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));
 
 const projects = window.portfolioProjects || [];
+document.title += ' · Portfolio V2';
+const versionMark=document.querySelector('.wordmark .copyright');
+if(versionMark){versionMark.textContent='V2';versionMark.classList.add('version-badge');}
+const wordmark=document.querySelector('.wordmark');
+if(wordmark)wordmark.setAttribute('aria-label','Joe Kanjirathingal, Portfolio Version 2, home');
 const icon = {
   search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>',
   sun:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>'
