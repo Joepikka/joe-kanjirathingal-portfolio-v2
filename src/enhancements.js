@@ -1,4 +1,5 @@
 import {searchProjects, resolveTheme, makeVectorSamples, pipelineStep} from './core.mjs';
+import {initMotion} from './motion.js';
 
 if(document.readyState==='loading') await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));
 
@@ -189,3 +190,4 @@ document.querySelectorAll('[data-scene]').forEach(host=>{
 document.querySelectorAll('a[href^="project.html?id="]').forEach(link=>{
   const id=new URL(link.href).searchParams.get('id');if(projects.some(p=>p.id===id))link.href=`projects/${id}.html`;
 });
+initMotion(projects);

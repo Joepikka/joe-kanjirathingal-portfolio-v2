@@ -62,13 +62,18 @@
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.querySelector('.motion-toggle');
   let paused = reducedMotion.matches;
+  try { paused = reducedMotion.matches || localStorage.getItem('portfolio-motion') === 'paused'; } catch {}
   const setMotion = value => {
-    paused = value;
+    paused = reducedMotion.matches || value;
     document.body.classList.toggle('motion-paused', paused);
     if (motionButton) { motionButton.setAttribute('aria-pressed', String(paused)); motionButton.querySelector('span').textContent = paused ? 'Resume motion' : 'Pause motion'; }
+    document.querySelectorAll('.magnetic').forEach(node=>node.style.removeProperty('transform'));
+    try { localStorage.setItem('portfolio-motion', value ? 'paused' : 'on'); } catch {}
+    window.dispatchEvent(new Event('portfolio-motion-change'));
   };
   setMotion(paused);
   motionButton?.addEventListener('click', () => setMotion(!paused));
+  addEventListener('portfolio-motion-request', event=>setMotion(Boolean(event.detail)));
   reducedMotion.addEventListener('change', event => setMotion(event.matches));
 
   const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
