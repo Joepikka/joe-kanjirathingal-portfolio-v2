@@ -1,4 +1,38 @@
-# Joe Kanjirathingal — portfolio
+# Joe Kanjirathingal — interactive portfolio preview
+
+This is an isolated version of the existing portfolio. The live production website has not been replaced.
+
+## Run this version
+
+Requires Node.js 22 or 24. Install dependencies and build before starting the local server:
+
+```sh
+npm ci
+npm run build
+npm run dev
+```
+
+Open `http://127.0.0.1:4173/`. Run `npm test` after building. No API keys are required.
+
+## New features
+
+- Light/dark/system themes, project search (Ctrl/Cmd+K), and copy-email/code buttons.
+- `journal.html`: three source-grounded study notes, including the ongoing six-month Python training.
+- `lab.html`: a selectable/scroll-linked ML workflow, illustrative network, synthetic text-vector explorer, and rotatable device containing a genuine screenshot.
+- `projects/<id>.html`: ten complete static case studies, each with unique Open Graph metadata and a 1200×630 sharing PNG. Legacy query-string URLs still work.
+- Mobile first loads static alternatives; 3D is requested explicitly. Rendering pauses offscreen and respects reduced motion. Exit controls restore ordinary scrolling and dispose WebGL resources.
+
+## Editing and deployment
+
+Original facts live in `projects.js` and the root HTML pages. New controls are in `src/enhancements.js`, graphics in `src/scenes.js`, and responsive/theme extensions in `enhancements.css`. `scripts/build.mjs` generates `dist/`, bundles Three.js locally, and creates share images from original screenshots.
+
+Deploy `dist/` as a separate preview, or let Vercel run `npm ci` and `npm run build`. Vercel's `VERCEL_URL` supplies the preview origin for share images; `SITE_URL` can override it. This preview deliberately includes `noindex` metadata and a blocking robots.txt. Remove that preview-only indexing restriction only when the user approves replacement, and rebuild for the final domain.
+
+Synthetic sentences/coordinates are explicitly illustrative. They are not IntentDesk embeddings, benchmark outputs, or new research claims. The original project metrics and limitations are preserved.
+
+## Original source documentation (historical)
+
+The counts and deployment identifiers below refer to earlier versions, retained as provenance.
 
 A responsive portfolio built with plain HTML, CSS and JavaScript, using Dennis Snellenberg's portfolio as the requested visual reference and Joe's own content and imagery.
 

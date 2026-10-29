@@ -33,7 +33,7 @@
 
   const detail = document.querySelector('[data-project-detail]');
   if (detail) {
-    const id = new URLSearchParams(location.search).get('id');
+    const id = detail.dataset.projectId || new URLSearchParams(location.search).get('id');
     const project = projects.find(item => item.id === id);
     if (project) {
       document.title = `${project.title} — Joe Kanjirathingal`;
