@@ -25,7 +25,6 @@ window.portfolioProjects = [
       "NumPy",
       "SciPy",
       "Excel",
-      "Power BI",
       "Three.js"
     ],
     "summary": "An end-to-end analysis of 110 million e-commerce events: a tested SQL warehouse, a caught tracking outage, a forecast, an A/B test design and a decision memo.",
