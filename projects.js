@@ -1,6 +1,79 @@
 // Canonical project families, reviewed against GitHub on 28 October 2026.
 window.portfolioProjects = [
   {
+    "id": "retail-analytics",
+    "explainer": "assets/explainer-retail-analytics.mp4",
+    "explainerPoster": "assets/explainer-retail-analytics-poster.webp",
+    "title": "Retail Analytics Lab",
+    "category": "data",
+    "discipline": "Data Analytics & SQL Warehousing",
+    "year": "2026",
+    "image": "assets/retail-analytics.webp",
+    "imageSmall": "assets/retail-analytics-small.webp",
+    "imageWidth": 1440,
+    "imageSmallWidth": 640,
+    "mediaWidth": 1440,
+    "mediaHeight": 900,
+    "imageAlt": "Retail Analytics Lab case-study site: the 61 days of revenue drawn as particle columns, with the 17 November tracking catch-up spike standing out",
+    "color": "#dcd6ea",
+    "status": "Live case study",
+    "technologies": [
+      "Python",
+      "SQL",
+      "DuckDB",
+      "Parquet",
+      "NumPy",
+      "SciPy",
+      "Excel",
+      "Power BI",
+      "Three.js"
+    ],
+    "summary": "An end-to-end analysis of 110 million e-commerce events: a tested SQL warehouse, a caught tracking outage, a forecast, an A/B test design and a decision memo.",
+    "paragraphs": [
+      "Turn two months of raw clickstream from a multi-category online store (REES46 Open CDP, Oct–Nov 2019, 4.6 GB compressed) into numbers a business can trust and act on: where revenue comes from, who buys again, and what to change next.",
+      "A resumable parallel download, typed Parquet staging with a SHA-256 manifest, and a DuckDB star schema with event and session facts plus product, user and date dimensions. SQL marts use window functions for rolling averages, weekly cohort retention, Pareto concentration and repurchase gaps. An hourly check found 48 hours on 14–17 November with normal traffic but no purchases logged; those days are excluded from conversion, which removes a false 53% weekend effect.",
+      "Python runs the pipeline; DuckDB holds the warehouse, capped at 4 GB so it runs on an 8 GB laptop. Fourteen data tests reconcile rows and $505.1M of revenue from the raw files to every output to the cent. Outputs: a Three.js and Motion case-study site, an Excel workbook whose formulas are checked against SQL, Power BI-ready CSVs and a written memo.",
+      "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression forecast 13 days at 5.6% MAPE against 5.9% for a seasonal-naive baseline, a small edge reported as such. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
+    ],
+    "features": [
+      "110M events in a DuckDB star schema",
+      "14 data tests reconciling $505.1M to the cent",
+      "Automatic detection of a 48-hour tracking outage",
+      "Forecast compared against three baselines",
+      "Decision memo, Excel workbook and Power BI-ready CSVs"
+    ],
+    "note": "Student portfolio project developed with AI coding assistance, on public REES46 Open CDP data. The A/B test is simulated to demonstrate the design; no claim is made about the real store's experiments.",
+    "source": "https://github.com/Joepikka/retail-analytics-lab",
+    "demo": "https://retail-analytics-lab.vercel.app",
+    "evidence": "https://github.com/Joepikka/retail-analytics-lab/blob/main/reports/decision_memo.md",
+    "caseStudy": [
+      {
+        "heading": "The problem",
+        "text": "Turn two months of raw clickstream from a multi-category online store (REES46 Open CDP, Oct–Nov 2019, 4.6 GB compressed) into numbers a business can trust and act on: where revenue comes from, who buys again, and what to change next."
+      },
+      {
+        "heading": "Project work",
+        "text": "A resumable parallel download, typed Parquet staging with a SHA-256 manifest, and a DuckDB star schema with event and session facts plus product, user and date dimensions. SQL marts use window functions for rolling averages, weekly cohort retention, Pareto concentration and repurchase gaps. An hourly check found 48 hours on 14–17 November with normal traffic but no purchases logged; those days are excluded from conversion, which removes a false 53% weekend effect."
+      },
+      {
+        "heading": "Architecture",
+        "text": "Python runs the pipeline; DuckDB holds the warehouse, capped at 4 GB so it runs on an 8 GB laptop. Fourteen data tests reconcile rows and $505.1M of revenue from the raw files to every output to the cent. Outputs: a Three.js and Motion case-study site, an Excel workbook whose formulas are checked against SQL, Power BI-ready CSVs and a written memo."
+      },
+      {
+        "heading": "Results and limits",
+        "text": "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression forecast 13 days at 5.6% MAPE against 5.9% for a seasonal-naive baseline, a small edge reported as such. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
+      }
+    ],
+    "flow": [
+      "Raw clickstream",
+      "Tested star schema",
+      "Tracking gap caught",
+      "Decisions"
+    ],
+    "imageKind": "screenshot",
+    "imageCaption": "Live case-study site, public 2019 data"
+  },
+  {
     "id": "quotecheck",
     "explainer": "assets/explainer-quotecheck.mp4",
     "explainerPoster": "assets/explainer-quotecheck-poster.webp",
