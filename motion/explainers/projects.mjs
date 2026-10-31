@@ -1,6 +1,17 @@
 // Content for the 20 s project explainers. Values marked "example" are illustrative; results quote the case studies.
 export const explainers = [
   {
+    id: 'retail-analytics', title: 'Retail Analytics Lab', discipline: 'Data analytics & SQL warehousing', color: '#dcd6ea',
+    steps: [
+      {title: 'Raw clickstream', text: '4.6 GB of e-commerce events are downloaded in parallel and typed into Parquet.', widget: {type: 'chips', items: ['2019-Oct.csv.gz', '2019-Nov.csv.gz', '110M events', 'view · cart · purchase']}},
+      {title: 'Tested star schema', text: 'DuckDB models events, sessions, products and users; 14 tests reconcile every total.', widget: {type: 'list', rows: [['Staged rows', '109,950,743'], ['Duplicates removed', '130,739'], ['Revenue reconciled', '$505.1M ✓']]}},
+      {title: 'Tracking gap caught', text: 'An hourly check finds 48 hours with traffic but no purchases logged.', widget: {type: 'list', rows: [['14 Nov, 19:00', 'logging stops'], ['15 Nov', '$40 revenue'], ['17 Nov', '$57.8M catch-up']], miss: 1}},
+      {title: 'Decisions', text: 'Findings become five recommendations, a forecast and a test design.', widget: {type: 'bars', note: 'Share of revenue', rows: [['Repeat buyers', .787, '78.7%'], ['Electronics', .756, '75.6%'], ['Apple + Samsung', .674, '67.4%']]}},
+    ],
+    result: '$505.1M reconciled to the cent. Forecast 5.6% MAPE against a 5.9% baseline.',
+    limit: 'Public 2019 data from one store. The A/B test is simulated, and the forecast edge is small.',
+  },
+  {
     id: 'quotecheck', title: 'QuoteCheck', discipline: 'Product matching & full-stack ML', color: '#d6e3e1',
     steps: [
       {title: 'Supplier documents', text: 'PDF and spreadsheet offers arrive; printed scans are read with OCR.', widget: {type: 'chips', items: ['quote_A.pdf', 'offer_B.xlsx', 'scan_C.pdf', 'tiers_D.xlsx']}},
