@@ -1,6 +1,75 @@
 // Canonical project families, reviewed against GitHub on 28 October 2026.
 window.portfolioProjects = [
   {
+    "id": "kerala-veg-prices",
+    "title": "Kerala Vegetable Prices",
+    "category": "data",
+    "discipline": "Data Analysis, Web Scraping & ML",
+    "year": "2026",
+    "image": "assets/kerala-veg-prices.webp",
+    "imageSmall": "assets/kerala-veg-prices-small.webp",
+    "imageWidth": 1440,
+    "imageSmallWidth": 640,
+    "mediaWidth": 1440,
+    "mediaHeight": 900,
+    "imageAlt": "Kerala Vegetable Prices case-study site: the headline 'Kerala pays more, and pays later.' beside a table of Kerala and all-India wholesale prices for tomato, onion and potato",
+    "color": "#e3d7de",
+    "status": "Live case study",
+    "technologies": [
+      "Python",
+      "SQL",
+      "DuckDB",
+      "scikit-learn",
+      "statsmodels",
+      "Scrapling",
+      "Flourish"
+    ],
+    "summary": "26.5 million wholesale market records show how much more Kerala pays for tomato, onion and potato, how fast price shocks arrive, and a model that warns of a spike about 16 days ahead.",
+    "paragraphs": [
+      "Kerala buys most of its tomato, onion and potato from markets in other states. Using Agmarknet wholesale records from 2021 to May 2026, answer three questions a buyer, cooperative or planner asks: how much more Kerala pays, how far apart nearby Kerala markets price the same crop, and whether a price spike can be seen coming.",
+      "A resumable parallel download of 5 GB from the India Data Portal, typed Parquet staging and a DuckDB warehouse. Two overlapping market-code systems were double-counting markets; 3,860 codes were resolved to 2,007 markets. A market-day more than 3× off its state's median is dropped, which removes a market that reported a flat ₹270/kg for weeks. Scrapling collects GDELT news volume and Open-Meteo weather at the supplying hubs; CAPTCHA-gated portals and sites whose robots.txt blocks AI crawlers were not scraped.",
+      "Thirteen data tests guard row counts, units, duplicates and outliers. Shock transmission uses cross-correlation, Granger tests and an asymmetric pass-through regression with HAC errors. The spike model is trained on a chronological split with a 14-day purge; the model and threshold are chosen on validation and the test is reported once. Outputs: an editorial case-study site with interactive Flourish charts and a literature review of 13 papers.",
+      "Over the last year Kerala paid 1.9× the all-India price for tomato, 2.6× for onion and 3.3× for potato. Tomato markets within 40 km differ by 20% or more on half of all days, and north Kerala sits 26% below the state median. The supplying hub spiked first in 22 of 28 Kerala spikes. On the held-out test, a logistic model scored 0.33 PR-AUC against 0.04 chance and 0.10 for trader rules, and warned of 4 of 5 spikes a median 16 days before the peak. Scraped news volume made the model worse and was left out. Wholesale prices only, and five test spikes is a small sample."
+    ],
+    "features": [
+      "26.5M Agmarknet records in a DuckDB warehouse",
+      "13 data tests, including a market-identity fix",
+      "Hub-to-Kerala shock transmission and pass-through",
+      "Spike warning: 4 of 5 test spikes, 16 days early",
+      "Interactive Flourish charts and a 13-paper literature review"
+    ],
+    "note": "Student portfolio project developed with AI coding assistance, on public Agmarknet data (India Data Portal, ODC-By). Wholesale prices, not retail; correlation does not establish where a shock started.",
+    "source": "https://github.com/Joepikka/kerala-veg-prices",
+    "demo": "https://kerala-veg-prices.vercel.app",
+    "evidence": "https://github.com/Joepikka/kerala-veg-prices/blob/main/docs/literature.md",
+    "caseStudy": [
+      {
+        "heading": "The problem",
+        "text": "Kerala buys most of its tomato, onion and potato from markets in other states. Using Agmarknet wholesale records from 2021 to May 2026, answer three questions a buyer, cooperative or planner asks: how much more Kerala pays, how far apart nearby Kerala markets price the same crop, and whether a price spike can be seen coming."
+      },
+      {
+        "heading": "Project work",
+        "text": "A resumable parallel download of 5 GB from the India Data Portal, typed Parquet staging and a DuckDB warehouse. Two overlapping market-code systems were double-counting markets; 3,860 codes were resolved to 2,007 markets. A market-day more than 3× off its state's median is dropped, which removes a market that reported a flat ₹270/kg for weeks. Scrapling collects GDELT news volume and Open-Meteo weather at the supplying hubs; CAPTCHA-gated portals and sites whose robots.txt blocks AI crawlers were not scraped."
+      },
+      {
+        "heading": "Architecture",
+        "text": "Thirteen data tests guard row counts, units, duplicates and outliers. Shock transmission uses cross-correlation, Granger tests and an asymmetric pass-through regression with HAC errors. The spike model is trained on a chronological split with a 14-day purge; the model and threshold are chosen on validation and the test is reported once. Outputs: an editorial case-study site with interactive Flourish charts and a literature review of 13 papers."
+      },
+      {
+        "heading": "Results and limits",
+        "text": "Over the last year Kerala paid 1.9× the all-India price for tomato, 2.6× for onion and 3.3× for potato. Tomato markets within 40 km differ by 20% or more on half of all days, and north Kerala sits 26% below the state median. The supplying hub spiked first in 22 of 28 Kerala spikes. On the held-out test, a logistic model scored 0.33 PR-AUC against 0.04 chance and 0.10 for trader rules, and warned of 4 of 5 spikes a median 16 days before the peak. Scraped news volume made the model worse and was left out. Wholesale prices only, and five test spikes is a small sample."
+      }
+    ],
+    "flow": [
+      "Mandi records",
+      "Clean warehouse",
+      "Shocks traced",
+      "16-day warning"
+    ],
+    "imageKind": "screenshot",
+    "imageCaption": "Live case-study site, public Agmarknet data"
+  },
+  {
     "id": "retail-analytics",
     "explainer": "assets/explainer-retail-analytics.mp4",
     "explainerPoster": "assets/explainer-retail-analytics-poster.webp",
