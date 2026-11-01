@@ -85,7 +85,7 @@ PROJECTS = [
       "Fine-tuned MiniLM on 19,835 product pairs; achieved 74.3% validation average precision and 64.7% F1 on a "
       "4,500-pair WDC Products benchmark, versus 43.4% F1 for the logistic baseline.",
       "Deployed ONNX CPU inference on Vercel with PostgreSQL; verified by 247 automated tests and 3 browser workflows."]),
-    ("IntentDesk - NLP Classification and Evaluation", "https://github.com/Joepikka/intentdesk", "GitHub",
+    ("IntentDesk - NLP Classification and Evaluation", "https://intentdesk.vercel.app", "Live demo",
      "Oct 2026 | Python, scikit-learn, PyTorch, FastAPI, SQLite",
      ["Built an NLP workflow for 150 intent categories using frozen pretrained MPNet embeddings, a downstream "
       "classifier and probability calibration.",

@@ -227,7 +227,7 @@ window.portfolioProjects = [
     "mediaWidth": 1269,
     "mediaHeight": 1625,
     "color": "#e0ddeb",
-    "status": "Local NLP research application",
+    "status": "Live demo",
     "technologies": [
       "Python",
       "FastAPI",
@@ -254,7 +254,7 @@ window.portfolioProjects = [
     ],
     "note": "Student project developed with AI coding assistance. Intent accuracy, rating accuracy and retrieval scores measure different tasks. Public reviews are subjective; pilot tickets are fictional. All published final checks are consumed.",
     "source": "https://github.com/Joepikka/intentdesk",
-    "demo": null,
+    "demo": "https://intentdesk.vercel.app",
     "evidence": "https://github.com/Joepikka/intentdesk/blob/main/reports/Milestone_05.md",
     "caseStudy": [
       {
