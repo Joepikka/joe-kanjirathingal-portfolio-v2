@@ -43,41 +43,42 @@ V2 = "https://joe-kanjirathingal-portfolio-v2.vercel.app"
 
 # ---------------- CONTENT ----------------
 HEADER = [
-    "Data Science and Machine Learning",
-    f"Thrissur, Kerala, India | +91 8075915694 | {link('mailto:joepikka5@gmail.com', 'joepikka5@gmail.com')}",
-    f"{link('https://github.com/Joepikka', 'github.com/Joepikka')} | "
-    f"{link('https://www.linkedin.com/in/joe-kanjirathingal-8b71a6360/', 'LinkedIn')} | {link(V2, 'Portfolio')}",
+    "Data Analyst | Power BI, SQL, Python | Machine Learning",
+    f"Thrissur, Kerala, India | +91 8075915694 | {link('mailto:joepikka5@gmail.com', 'joepikka5@gmail.com')} | "
+    f"{link('https://github.com/Joepikka', 'github.com/Joepikka')}",
+    f"{link('https://www.linkedin.com/in/joe-kanjirathingal-8b71a6360/', 'linkedin.com/in/joe-kanjirathingal-8b71a6360')} | "
+    f"{link(V2, 'joe-kanjirathingal-portfolio-v2.vercel.app')}",
 ]
 SUMMARY = (
-    "B.Tech Artificial Intelligence student graduating in March 2027, seeking data analyst, data science and machine "
-    "learning internships. Analysed 26.5 million wholesale market records to trace Kerala vegetable price shocks and "
-    "built a spike-warning model; project experience in Python, SQL, Power BI, Excel, web scraping, statistics, "
-    "NLP classification and forecasting, with reproducible evaluation."
+    "B.Tech Artificial Intelligence student (graduating March 2027) seeking data analyst, data science and machine "
+    "learning internships. Built Power BI dashboards (DAX, Power Query, star-schema data models), Excel reports and SQL "
+    "warehouses with tested ETL pipelines; skilled in data cleaning, data analysis, data visualization and statistics."
 )
 EDUCATION = ("B.Tech in Artificial Intelligence | Sep 2023 - Mar 2027 (expected)",
              "Vidya Academy of Science and Technology, Thrissur, Kerala")
 SKILLS = [
-    ("Programming and Data", "Python, SQL (window functions, CTEs), DuckDB, Parquet, pandas, NumPy, data validation"),
-    ("Analytics and BI", "Power BI (DAX, Power Query), Excel (PivotTables, XLOOKUP, SUMIFS), time series, A/B tests, forecasting"),
-    ("Machine Learning", "scikit-learn, PyTorch, Hugging Face Transformers, ONNX, NLP, classification, calibration"),
-    ("Visualization and Applications", "Flourish, Chart.js, Three.js, Leaflet, web scraping (Scrapling), FastAPI, React"),
-    ("Databases and Tools", "PostgreSQL, SQLite, Supabase, Git, GitHub, Vercel"),
+    ("BI and Reporting", "Power BI (DAX, Power Query, data modeling), Excel (PivotTables, slicers, XLOOKUP, SUMIFS), KPIs"),
+    ("Programming and Data", "Python, SQL (window functions, CTEs), pandas, NumPy, DuckDB, ETL, data cleaning"),
+    ("Statistics", "regression, hypothesis testing, time-series analysis, A/B test design, forecasting, cohort analysis"),
+    ("Machine Learning", "scikit-learn, PyTorch, Hugging Face Transformers, ONNX, NLP, classification, model evaluation"),
+    ("Visualization and Tools", "Flourish, Chart.js, Leaflet, web scraping (Scrapling), FastAPI, React, PostgreSQL, Git"),
 ]
 PROJECTS = [
-    ("Kerala Vegetable Prices - Price Shocks, Market Gaps and Spike Warning", "https://kerala-veg-prices.vercel.app", "Live site",
-     "Nov 2026 | Python, SQL, DuckDB, scikit-learn, statsmodels, Power BI, Excel, Scrapling",
-     ["Built a DuckDB pipeline over 26.5M Agmarknet records (5 GB) with 13 data tests; merged 3,860 market codes into 2,007.",
-      "Found Kerala paid 1.9-3.3x the all-India wholesale price and 20%+ gaps between markets 40 km apart; built a "
-      "Power BI report (DAX star schema) and an Excel workbook with PivotTables.",
-      "Trained a spike-warning model on a chronological split: 0.33 PR-AUC versus 0.04 chance, warning of 4 of 5 "
-      "held-out spikes a median 16 days early; scraped news features hurt and were dropped."]),
+    ("Kerala Vegetable Prices - Power BI Dashboard, Price Analysis and Spike Warning", "https://kerala-veg-prices.vercel.app", "Live site",
+     "Nov 2026 | Power BI, Excel, Python, SQL, DuckDB, scikit-learn, statsmodels, Scrapling",
+     ["Built a 3-page Power BI dashboard on a star-schema data model (9 tables, Power Query, 20 DAX measures, KPI cards, "
+      "slicers) and an Excel workbook with PivotTables whose 12 KPIs match Python.",
+      "Cleaned 26.5M Agmarknet records (5 GB) in a tested ETL pipeline; found Kerala paid 1.9-3.3x the all-India "
+      "wholesale price, with 20%+ gaps between markets 40 km apart.",
+      "Trained a logistic regression spike-warning model on a chronological split: 0.33 PR-AUC versus 0.04 chance, "
+      "warning of 4 of 5 held-out spikes a median 16 days early."]),
     ("Retail Analytics Lab - E-commerce Data Warehouse and Analysis", "https://retail-analytics-lab.vercel.app", "Live site",
      "Oct 2026 | Python, SQL, DuckDB, Parquet, NumPy, SciPy, Excel",
      ["Built a reproducible Python and DuckDB pipeline and star schema over 110M e-commerce events (4.6 GB); 14 data "
       "tests reconcile rows and $505.1M of revenue from raw files to every output.",
       "Detected a 48-hour purchase-tracking outage that created a false 53% weekend revenue effect; added automated "
       "gap detection and excluded the affected days from conversion analysis.",
-      "Wrote SQL marts (window functions, cohorts, Pareto) and a decision memo: 42% of buyers drive 79% of revenue; "
+      "Wrote SQL marts (window functions, cohorts, Pareto) and a business memo: 42% of buyers drive 79% of revenue; "
       "13-day forecast at 5.6% MAPE versus a 5.9% seasonal-naive baseline."]),
     ("QuoteCheck - Supplier Quotation Review and Product Matching", f"{V1}/project.html?id=quotecheck", "Project",
      "Oct 2026 - Present | Python, PyTorch, FastAPI, React, PostgreSQL, ONNX, Vercel",
