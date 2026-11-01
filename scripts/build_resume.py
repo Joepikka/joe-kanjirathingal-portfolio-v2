@@ -51,24 +51,24 @@ HEADER = [
 SUMMARY = (
     "B.Tech Artificial Intelligence student graduating in March 2027, seeking data analyst, data science and machine "
     "learning internships. Analysed 26.5 million wholesale market records to trace Kerala vegetable price shocks and "
-    "built a spike-warning model; project experience in Python, SQL, web scraping, statistics, NLP classification, "
-    "forecasting and dashboards, with reproducible evaluation."
+    "built a spike-warning model; project experience in Python, SQL, Power BI, Excel, web scraping, statistics, "
+    "NLP classification and forecasting, with reproducible evaluation."
 )
 EDUCATION = ("B.Tech in Artificial Intelligence | Sep 2023 - Mar 2027 (expected)",
              "Vidya Academy of Science and Technology, Thrissur, Kerala")
 SKILLS = [
     ("Programming and Data", "Python, SQL (window functions, CTEs), DuckDB, Parquet, pandas, NumPy, data validation"),
-    ("Analytics", "Excel (SUMIFS, XLOOKUP, PivotTables), time-series analysis, statsmodels, A/B test design, forecasting"),
+    ("Analytics and BI", "Power BI (DAX, Power Query), Excel (PivotTables, XLOOKUP, SUMIFS), time series, A/B tests, forecasting"),
     ("Machine Learning", "scikit-learn, PyTorch, Hugging Face Transformers, ONNX, NLP, classification, calibration"),
     ("Visualization and Applications", "Flourish, Chart.js, Three.js, Leaflet, web scraping (Scrapling), FastAPI, React"),
     ("Databases and Tools", "PostgreSQL, SQLite, Supabase, Git, GitHub, Vercel"),
 ]
 PROJECTS = [
     ("Kerala Vegetable Prices - Price Shocks, Market Gaps and Spike Warning", "https://kerala-veg-prices.vercel.app", "Live site",
-     "Nov 2026 | Python, SQL, DuckDB, scikit-learn, statsmodels, Scrapling, Flourish",
+     "Nov 2026 | Python, SQL, DuckDB, scikit-learn, statsmodels, Power BI, Excel, Scrapling",
      ["Built a DuckDB pipeline over 26.5M Agmarknet records (5 GB) with 13 data tests; merged 3,860 market codes into 2,007.",
-      "Found Kerala paid 1.9-3.3x the all-India wholesale price; measured hub-to-Kerala shock pass-through and 20%+ "
-      "same-day gaps between markets within 40 km on half of all days.",
+      "Found Kerala paid 1.9-3.3x the all-India wholesale price and 20%+ gaps between markets 40 km apart; built a "
+      "Power BI report (DAX star schema) and an Excel workbook with PivotTables.",
       "Trained a spike-warning model on a chronological split: 0.33 PR-AUC versus 0.04 chance, warning of 4 of 5 "
       "held-out spikes a median 16 days early; scraped news features hurt and were dropped."]),
     ("Retail Analytics Lab - E-commerce Data Warehouse and Analysis", "https://retail-analytics-lab.vercel.app", "Live site",
