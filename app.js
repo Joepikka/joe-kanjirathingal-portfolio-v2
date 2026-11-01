@@ -27,7 +27,7 @@
       const filter = button.dataset.filter;
       document.querySelectorAll('[data-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
       let count = 0;
-      grid.querySelectorAll('.project-card').forEach(card => { card.hidden = filter !== 'all' && card.dataset.category !== filter; if (!card.hidden) count++; });
+      grid.querySelectorAll('.project-card').forEach(card => { card.hidden = filter !== 'all' && !card.dataset.category.split(' ').includes(filter); if (!card.hidden) count++; });
       status.textContent = `${count} ${count === 1 ? 'project' : 'projects'}`;
     }));
   }
