@@ -38,8 +38,7 @@ def link(url, text):
     return f'<a href="{url}"><u>{text}</u></a>'
 
 
-V1 = "https://joe-kanjirathingal-portfolio.vercel.app"
-V2 = "https://joe-kanjirathingal-portfolio-v2.vercel.app"
+V1 = "https://joe-kanjirathingal-portfolio.vercel.app"  # the public portfolio; V2 is staging
 
 # ---------------- CONTENT ----------------
 HEADER = [
@@ -47,7 +46,7 @@ HEADER = [
     f"Thrissur, Kerala, India | +91 8075915694 | {link('mailto:joepikka5@gmail.com', 'joepikka5@gmail.com')} | "
     f"{link('https://github.com/Joepikka', 'github.com/Joepikka')}",
     f"{link('https://www.linkedin.com/in/joe-kanjirathingal-8b71a6360/', 'linkedin.com/in/joe-kanjirathingal-8b71a6360')} | "
-    f"{link(V2, 'joe-kanjirathingal-portfolio-v2.vercel.app')}",
+    f"{link(V1, 'joe-kanjirathingal-portfolio.vercel.app')}",
 ]
 SUMMARY = (
     "B.Tech Artificial Intelligence student (graduating March 2027) seeking data analyst, data science and machine "
