@@ -13,11 +13,9 @@ Desk prompt: preserve the same identity; a candid three-quarter portrait at an u
 ## Project imagery
 
 - `assets/intentdesk.jpg`: actual project screenshot from https://github.com/Joepikka/intentdesk/blob/main/docs/assets/pilot-assisted.jpg.
-- `assets/crime-map.png`: live screenshot of https://kerala-crime-map.pages.dev/ captured on 18 October 2026. Underlying map attribution remains visible; the screenshot does not depict approved locations or street-level incidents.
 - `assets/cooksmart.png`: live screenshot of https://cook-smart-omega.vercel.app/ captured on 18 October 2026. The underlying food photograph is attributed within the original site to Hugo Aitken / Unsplash.
 - `assets/dental.png`: live screenshot of https://dental-nine-eta.vercel.app/ captured on 18 October 2026.
 - `assets/lillys-pos.png`: Joe's actual local-demo screenshot from the Lilly's POS Featured item on his LinkedIn profile. No broken-live-demo screenshot is presented as a functioning application.
-- `assets/ev-map.svg`: code-rendered chart of the actual district boundary in https://github.com/Joepikka/EV_Site_Selection/blob/main/data/processed/thrissur_boundary.geojson. It does not represent approved charger sites.
 
 ## Font and design reference
 

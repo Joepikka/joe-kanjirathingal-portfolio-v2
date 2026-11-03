@@ -69,7 +69,7 @@ SKILLS = [
     ("Programming and Data", "Python, SQL (window functions, CTEs), pandas, NumPy, DuckDB, ETL, data cleaning"),
     ("Statistics", "regression, hypothesis testing, time-series analysis, forecasting, cohort analysis"),
     ("Machine Learning", "scikit-learn, PyTorch, Hugging Face Transformers, ONNX, NLP, classification, model evaluation"),
-    ("Visualization and Tools", "Flourish, Chart.js, Leaflet, web scraping (Scrapling), FastAPI, React, PostgreSQL, Git"),
+    ("Visualization and Tools", "Flourish, web scraping (Scrapling), FastAPI, React, PostgreSQL, Git"),
 ]
 PROJECTS = [
     ("Kerala Vegetable Prices - Power BI Dashboard, Price Analysis and Spike Warning", "https://kerala-veg-prices.vercel.app", "Live site",
@@ -100,10 +100,6 @@ PROJECTS = [
       "classifier and probability calibration.",
       "96.24% accuracy on 4,500 CLINC150 test requests versus 91.96% for a lexical baseline; kept human review "
       "after unsupported-request detection failed."]),
-    ("Kerala Crime Intelligence Map - Data Dashboard", "https://kerala-crime-map.pages.dev/", "Live demo",
-     "Sep 2026 - Present | Python, JavaScript, Leaflet, Chart.js",
-     ["Built a dashboard of Kerala Police statistics across 14 districts with trends, Census 2011 rates, CSV exports "
-      "and scheduled source checks; reconciled district totals against the state total."]),
 ]
 TRAINING = ("Python Full-Stack Development | SMEClabs, Kochi | Jun 2026 - Dec 2026 (expected)",
             "Six-month programme covering Python, SQL, Django, HTML/CSS and JavaScript.")
@@ -112,7 +108,7 @@ TRAINING = ("Python Full-Stack Development | SMEClabs, Kochi | Jun 2026 - Dec 20
 
 if ML:  # same facts, ML projects first
     HEADER[0], SUMMARY = ML_HEADLINE, ML_SUMMARY
-    PROJECTS = [PROJECTS[i] for i in (2, 3, 0, 1, 4)]
+    PROJECTS = [PROJECTS[i] for i in (2, 3, 0, 1)]
     SKILLS = [SKILLS[i] for i in (3, 1, 2, 0, 4)]
 
 

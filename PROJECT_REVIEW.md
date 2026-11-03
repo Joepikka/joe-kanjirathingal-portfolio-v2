@@ -1,14 +1,12 @@
 # GitHub portfolio review
 
-Reviewed 12 repositories on 18 October 2026 and curated nine distinct project families. Lilly’s POS remains first; CookSmart remains last.
+Reviewed 12 repositories on 18 October 2026 and curated nine distinct project families (Kerala Crime Map and Thrissur EV Site Selection were later removed because they are not Joe's own work). Lilly’s POS remains first; CookSmart remains last.
 
 | Project | Portfolio decision |
 |---|---|
 | Lilly's POS | Retained and refined from source evidence |
 | IntentDesk | Retained and refined from source evidence |
 | La Liga ML Forecasting | Added with a labeled concept illustration |
-| Kerala Crime Map | Retained and refined from source evidence |
-| Thrissur EV Site Selection | Retained and refined from source evidence |
 | Meme Coin Lab | Added with a labeled concept illustration |
 | Forex Demo Research Platform | Added with a labeled concept illustration |
 | Smile Dental | Retained and refined from source evidence |

@@ -34,17 +34,6 @@ export const explainers = [
     limit: 'The unsupported-request rule failed and stays disabled. Pilot tickets are fictional.',
   },
   {
-    id: 'crime-map', title: 'Kerala Crime Map', discipline: 'Data analysis & visualisation', color: '#34393b', dark: true,
-    steps: [
-      {title: 'Official aggregates', text: 'Kerala Police district statistics are loaded as published.', widget: {type: 'list', rows: [['Thiruvananthapuram', ''], ['Ernakulam', ''], ['Thrissur', ''], ['Kozhikode', '']], bars: [.82, .71, .63, .58]}},
-      {title: 'Reconciliation checks', text: 'District totals are checked against the state total before display.', widget: {type: 'chips', items: ['✓ District sum = state total', '✓ Source health', '✓ Year coverage'], accent: 0}},
-      {title: 'District maps & trends', text: 'Fourteen districts as map layers, with raw counts and labelled rates.', widget: {type: 'gridline', cells: 14, cols: 7, label: '14 districts · statewide trend'}},
-      {title: 'Sources & exports', text: 'Shareable filters, saved views and export snapshots keep the source visible.', widget: {type: 'chips', items: ['Source: Kerala Police', 'Shareable view', 'Export snapshot ↓'], accent: 0}},
-    ],
-    result: 'District POCSO layers and trends, with raw counts and labelled rates.',
-    limit: 'Recent news appears as separate context, never mixed into the official figures.',
-  },
-  {
     id: 'laliga-ml', title: 'La Liga ML', discipline: 'Machine learning research', color: '#d9e0df',
     steps: [
       {title: 'Historical archives', text: 'Fixtures and player histories are collected and reconciled.', widget: {type: 'list', rows: [['Real Madrid – Sevilla', ''], ['Barcelona – Valencia', ''], ['Betis – Villarreal', ''], ['Athletic – Girona', '']]}},
@@ -65,17 +54,6 @@ export const explainers = [
     ],
     result: 'Ordering, kitchen tracking, receipts and daily reports on one order state.',
     limit: 'Prototype with demo prices. No online payment gateway.',
-  },
-  {
-    id: 'ev-sites', title: 'Thrissur EV Sites', discipline: 'GIS & spatial analysis', color: '#c9d1c8',
-    steps: [
-      {title: 'Geographic layers', text: 'District boundary, a one-kilometre grid, roads and existing chargers.', widget: {type: 'chips', items: ['District boundary', '1 km grid', 'Roads', 'Existing chargers']}},
-      {title: 'Candidate filtering', text: 'Grid cells become candidates; charger proximity filters them.', widget: {type: 'grid', cells: 28, cols: 7}},
-      {title: 'Distance calculations', text: 'Each candidate gets its nearest charger and nearest road distance.', widget: {type: 'list', note: 'Example rows', rows: [['Candidate 12', 'charger 2.4 km · road 0.1 km'], ['Candidate 31', 'charger 3.8 km · road 0.3 km'], ['Candidate 47', 'charger 1.9 km · road 0.2 km']]}},
-      {title: 'GIS inspection', text: 'Switchable layers, popups and a results table in Streamlit and Folium.', widget: {type: 'chips', items: ['Candidate layer', 'Distance results', 'Results table'], accent: 0}},
-    ],
-    result: 'A GIS viewer for inspecting candidate sites against chargers and roads.',
-    limit: 'Synthetic labels. Real sites need field, land and grid-capacity evidence.',
   },
   {
     id: 'cooksmart', title: 'CookSmart', discipline: 'Web application', color: '#d5c8b2',

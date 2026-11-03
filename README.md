@@ -80,6 +80,6 @@ The contact email joepikka5@gmail.com was explicitly approved for public use. A 
 
 ## GitHub catalogue review
 
-Reviewed all 12 connected owner repositories on 18 October 2026. The portfolio contains nine distinct project families: Lilly’s POS, IntentDesk, La Liga ML Forecasting, Kerala Crime Map, Thrissur EV Site Selection, Meme Coin Lab, Forex Demo Research Platform, Smile Dental and CookSmart. CookSmart-ApplePie, CookSmart-ApplePie-Scroll and the earlier lillys preview are grouped into their canonical projects. See PROJECT_REVIEW.md.
+Reviewed all 12 connected owner repositories on 18 October 2026. The portfolio contains ten project families: Kerala Vegetable Prices, Retail Analytics Lab, QuoteCheck, IntentDesk, La Liga ML Forecasting, Lilly’s POS, CookSmart, Smile Dental, Meme Coin Lab and Forex Demo Research Platform. Kerala Crime Map and Thrissur EV Site Selection were removed on 3 November 2026 because they are not Joe's own work. CookSmart-ApplePie, CookSmart-ApplePie-Scroll and the earlier lillys preview are grouped into their canonical projects. See PROJECT_REVIEW.md.
 
 Every case study includes an implementation flow, source-grounded features, architecture and limitations. The three new project covers are explicitly labeled AI-generated concept illustrations. Private GitHub repositories are not linked as public source. La Liga’s comparison preserves its unsuccessful newer-model result; Forex is demo-only and Meme Coin Lab is research/draft preparation.
