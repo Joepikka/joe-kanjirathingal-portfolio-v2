@@ -103,7 +103,7 @@ window.portfolioProjects = [
       "Turn two months of raw clickstream from a multi-category online store (REES46 Open CDP, Oct–Nov 2019, 4.6 GB compressed) into numbers a business can trust and act on: where revenue comes from, who buys again, and what to change next.",
       "A resumable parallel download, typed Parquet staging with a SHA-256 manifest, and a DuckDB star schema with event and session facts plus product, user and date dimensions. SQL marts use window functions for rolling averages, weekly cohort retention, Pareto concentration and repurchase gaps. An hourly check found 48 hours on 14–17 November with normal traffic but no purchases logged; those days are excluded from conversion, which removes a false 53% weekend effect.",
       "Python runs the pipeline; DuckDB holds the warehouse, capped at 4 GB so it runs on an 8 GB laptop. Fourteen data tests reconcile rows and $505.1M of revenue from the raw files to every output to the cent. Outputs: a Three.js and Motion case-study site, an Excel workbook whose formulas are checked against SQL, Power BI-ready CSVs and a written memo.",
-      "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression forecast 13 days at 5.6% MAPE against 5.9% for a seasonal-naive baseline, a small edge reported as such. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
+      "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression scored 5.6% MAPE against 5.9% for a seasonal-naive baseline on the 12 normal test days, a small edge reported as such; it missed Black Friday by 24% because it has no promotion feature. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
     ],
     "features": [
       "110M events in a DuckDB star schema",
@@ -131,7 +131,7 @@ window.portfolioProjects = [
       },
       {
         "heading": "Results and limits",
-        "text": "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression forecast 13 days at 5.6% MAPE against 5.9% for a seasonal-naive baseline, a small edge reported as such. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
+        "text": "Electronics is 75.6% of revenue, Apple and Samsung 67.4%, and 42% of buyers produce 78.7% of it. A trend-plus-weekday regression scored 5.6% MAPE against 5.9% for a seasonal-naive baseline on the 12 normal test days, a small edge reported as such; it missed Black Friday by 24% because it has no promotion feature. The A/B test (101,365 sessions per arm, at least 14 days) is a simulation that demonstrates the method; it is not a result about the store. Public 2019 data from one store, with no costs or margins."
       }
     ],
     "flow": [

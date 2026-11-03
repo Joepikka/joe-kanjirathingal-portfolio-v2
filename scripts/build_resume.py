@@ -87,7 +87,7 @@ PROJECTS = [
       "Detected a 48-hour purchase-tracking outage that created a false 53% weekend revenue effect; added automated "
       "gap detection and excluded the affected days from conversion analysis.",
       "Wrote SQL marts (window functions, cohorts, Pareto) and a business memo: 42% of buyers drive 79% of revenue; "
-      "13-day forecast at 5.6% MAPE versus a 5.9% seasonal-naive baseline."]),
+      "forecast beat a seasonal-naive baseline on normal days (5.6% vs 5.9% MAPE) but missed Black Friday by 24%."]),
     ("QuoteCheck - Supplier Quotation Review and Product Matching", f"{V1}/project.html?id=quotecheck", "Project",
      "Oct 2026 - Present | Python, PyTorch, FastAPI, React, PostgreSQL, ONNX, Vercel",
      ["Built a quotation-review app with PDF/XLSX extraction, source-linked corrections, exact pricing and exports.",

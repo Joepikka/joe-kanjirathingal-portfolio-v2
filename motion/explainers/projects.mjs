@@ -8,7 +8,7 @@ export const explainers = [
       {title: 'Tracking gap caught', text: 'An hourly check finds 48 hours with traffic but no purchases logged.', widget: {type: 'list', rows: [['14 Nov, 19:00', 'logging stops'], ['15 Nov', '$40 revenue'], ['17 Nov', '$57.8M catch-up']], miss: 1}},
       {title: 'Decisions', text: 'Findings become five recommendations, a forecast and a test design.', widget: {type: 'bars', note: 'Share of revenue', rows: [['Repeat buyers', .787, '78.7%'], ['Electronics', .756, '75.6%'], ['Apple + Samsung', .674, '67.4%']]}},
     ],
-    result: '$505.1M reconciled to the cent. Forecast 5.6% MAPE against a 5.9% baseline.',
+    result: '$505.1M reconciled to the cent. Forecast beat baselines on normal days, missed Black Friday by 24%.',
     limit: 'Public 2019 data from one store. The A/B test is simulated, and the forecast edge is small.',
   },
   {
