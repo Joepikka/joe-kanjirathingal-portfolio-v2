@@ -1,9 +1,11 @@
 """Build the one-page resume PDF (assets/joe-kanjirathingal-resume.pdf).
 
-Run: python scripts/build_resume.py
+Run: python scripts/build_resume.py        (data analyst version)
+     python scripts/build_resume.py --ml   (machine learning version)
 Needs reportlab and the Calibri fonts that ship with Windows (C:/Windows/Fonts).
 Edit the CONTENT section below, rebuild, and check that it still fits one page.
 """
+import sys
 from pathlib import Path
 
 from reportlab.lib.colors import black
@@ -16,7 +18,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "assets" / "joe-kanjirathingal-resume.pdf"
+ML = "--ml" in sys.argv
+OUT = ROOT / "assets" / ("joe-kanjirathingal-resume-ml.pdf" if ML else "joe-kanjirathingal-resume.pdf")
 FONTS = Path("C:/Windows/Fonts")
 
 pdfmetrics.registerFont(TTFont("Calibri", str(FONTS / "calibri.ttf")))
@@ -51,14 +54,20 @@ HEADER = [
 SUMMARY = (
     "B.Tech Artificial Intelligence student (graduating March 2027) seeking data analyst, data science and machine "
     "learning internships. Built Power BI dashboards (DAX, Power Query, star-schema data models), Excel reports and SQL "
-    "warehouses with tested ETL pipelines; skilled in data cleaning, data analysis, data visualization and statistics."
+    "warehouses with tested ETL pipelines; found Kerala paid 1.9-3.3x the all-India vegetable price across 26.5M records."
+)
+ML_HEADLINE = "Machine Learning | Python, PyTorch, NLP | Data Analysis"
+ML_SUMMARY = (
+    "B.Tech Artificial Intelligence student (graduating March 2027) seeking machine learning, data science and data "
+    "analyst internships. Fine-tuned MiniLM and served it with ONNX, built an MPNet-embedding classifier and compared "
+    "every model with a baseline; built tested data pipelines over 110M+ records with Python, SQL and DuckDB."
 )
 EDUCATION = ("B.Tech in Artificial Intelligence | Sep 2023 - Mar 2027 (expected)",
              "Vidya Academy of Science and Technology, Thrissur, Kerala")
 SKILLS = [
     ("BI and Reporting", "Power BI (DAX, Power Query, data modeling), Excel (PivotTables, slicers, XLOOKUP, SUMIFS), KPIs"),
     ("Programming and Data", "Python, SQL (window functions, CTEs), pandas, NumPy, DuckDB, ETL, data cleaning"),
-    ("Statistics", "regression, hypothesis testing, time-series analysis, A/B test design, forecasting, cohort analysis"),
+    ("Statistics", "regression, hypothesis testing, time-series analysis, forecasting, cohort analysis"),
     ("Machine Learning", "scikit-learn, PyTorch, Hugging Face Transformers, ONNX, NLP, classification, model evaluation"),
     ("Visualization and Tools", "Flourish, Chart.js, Leaflet, web scraping (Scrapling), FastAPI, React, PostgreSQL, Git"),
 ]
@@ -93,12 +102,18 @@ PROJECTS = [
       "after unsupported-request detection failed."]),
     ("Kerala Crime Intelligence Map - Data Dashboard", "https://kerala-crime-map.pages.dev/", "Live demo",
      "Sep 2026 - Present | Python, JavaScript, Leaflet, Chart.js",
-     ["Built an interactive dashboard of published Kerala Police statistics with district comparisons, trend charts "
-      "and population-adjusted rates; reconciled district totals against the state total."]),
+     ["Built a dashboard of Kerala Police statistics across 14 districts with trends, Census 2011 rates, CSV exports "
+      "and scheduled source checks; reconciled district totals against the state total."]),
 ]
 TRAINING = ("Python Full-Stack Development | SMEClabs, Kochi | Jun 2026 - Dec 2026 (expected)",
             "Six-month programme covering Python, SQL, Django, HTML/CSS and JavaScript.")
 # -----------------------------------------
+
+
+if ML:  # same facts, ML projects first
+    HEADER[0], SUMMARY = ML_HEADLINE, ML_SUMMARY
+    PROJECTS = [PROJECTS[i] for i in (2, 3, 0, 1, 4)]
+    SKILLS = [SKILLS[i] for i in (3, 1, 2, 0, 4)]
 
 
 def story():
