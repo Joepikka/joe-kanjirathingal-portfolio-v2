@@ -163,6 +163,7 @@
   gap: clamp(12px, 2vw, 30px);
   margin-top: 55px;
 }
+.about-photo img { height: auto; aspect-ratio: auto; }
 .travel-photos img { width: 100%; height: auto; background: var(--panel); }
 
 @media (max-width: 860px) {
