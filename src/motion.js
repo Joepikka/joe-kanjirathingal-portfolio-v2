@@ -2,6 +2,7 @@ import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {canAnimate,pointerDepth,spotlightMedia} from './motion-policy.mjs';
 import {mountCursorThread} from './cursor-thread.js';
+import {mountHeroSwipe} from './hero-swipe.js';
 import {initEffects} from './effects.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,6 +19,8 @@ export function initMotion(projects){
 
   // Keep the existing portrait and real project imagery; the field is decorative SVG.
   const depth=hero?.querySelector('.portrait-depth');
+  const swipeLine=hero?.querySelector('.hero-touch-trail polyline');
+  const clearSwipe=swipeLine ? mountHeroSwipe(hero,swipeLine,enabled) : null;
   if(hero){
     const field=document.createElement('div');field.className='hero-field';field.setAttribute('aria-hidden','true');
     field.innerHTML='<svg viewBox="0 0 1200 800" fill="none"><g class="field-orbits"><ellipse cx="600" cy="390" rx="440" ry="260" transform="rotate(-24 600 390)"/><ellipse cx="600" cy="390" rx="440" ry="160" transform="rotate(30 600 390)"/><path d="M78 600 296 238 787 128 1104 480 790 685 78 600M296 238 790 685M787 128 1104 480"/></g><g class="field-points"><circle cx="78" cy="600" r="4"/><circle cx="296" cy="238" r="5"/><circle cx="787" cy="128" r="4"/><circle cx="1104" cy="480" r="5"/><circle cx="790" cy="685" r="4"/></g></svg>';
@@ -158,7 +161,7 @@ export function initMotion(projects){
     // Also finish a crossfade created outside the context before pausing.
     if(showcaseImage){gsap.killTweensOf(showcaseImage);gsap.set(showcaseImage,{clearProps:'opacity,transform'});}
   }
-  function refresh(){stop();syncControl();if(enabled())start();syncLoop();loadNetwork();network?.wake();}
+  function refresh(){stop();syncControl();if(enabled())start();else clearSwipe?.();syncLoop();loadNetwork();network?.wake();}
   hero?.addEventListener('pointermove',event=>{
     if(!enabled())return;
     const p=pointerDepth(event.clientX,event.clientY,hero.getBoundingClientRect());

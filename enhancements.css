@@ -26,6 +26,26 @@ html{scrollbar-gutter:stable}body{transition:background-color .2s,color .2s}butt
 .portrait-depth{position:absolute;inset:0;pointer-events:none}
 .hero-field{position:absolute;inset:0;pointer-events:none;opacity:.28;overflow:hidden}
 .hero-field svg{width:100%;height:100%;object-fit:cover}
+.hero-touch-trail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-touch-trail polyline {
+  fill: none;
+  stroke: #354bdf;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity .24s ease-out;
+}
+.hero-touch-trail polyline.is-active { opacity: 1; transition: none; }
+.motion-paused .hero-touch-trail { display: none; }
+@media (prefers-reduced-motion: reduce) { .hero-touch-trail { display: none; } }
+@media (any-pointer: coarse) {
+  .hero { touch-action: pan-y pinch-zoom; }
+}
 .field-orbits{stroke:#273835;stroke-width:.7}.field-orbits ellipse{stroke-dasharray:3 9}
 .field-points{fill:#263e36;stroke:#c3cbc5;stroke-width:6;paint-order:stroke}
 .hero-field-label{position:absolute;left:var(--page-padding);top:132px;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.1em;color:#263731}
@@ -228,7 +248,7 @@ html:has(body.motion-paused){scroll-behavior:auto}
   }
   .hero-bottom .text-link { min-height: 44px; }
   .hero-bottom .motion-toggle { min-height: 44px; font-size: 12px; }
-  .hero .hero-field.webgl-ready { opacity: .25; }
+  .hero .hero-field.webgl-ready { opacity: .55; }
 }
 
 @media (max-width: 720px) {

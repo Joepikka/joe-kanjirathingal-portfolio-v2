@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {mountHeroSwipe} from '../src/hero-swipe.js';
 const motion=await import('../src/motion-policy.mjs').catch(error=>{
   if(error.code!=='ERR_MODULE_NOT_FOUND') throw error;
   return {};
@@ -38,4 +39,45 @@ test('pointer depth stays bounded outside the surface and handles empty bounds',
   assert.deepEqual(motion.pointerDepth(300,150,box),{x:0,y:0});
   assert.deepEqual(motion.pointerDepth(-100,1000,box),{x:-1,y:1});
   assert.deepEqual(motion.pointerDepth(100,100,{left:0,top:0,width:0,height:0}),{x:0,y:0});
+});
+
+test('the hero draws a bounded trail for a touch swipe and clears it when canceled',()=>{
+  const hero=new EventTarget();
+  hero.getBoundingClientRect=()=>({left:10,top:20});
+  const classes=new Set();
+  const attributes=new Map();
+  const path={
+    classList:{add:name=>classes.add(name),remove:name=>classes.delete(name)},
+    setAttribute:(name,value)=>attributes.set(name,value)
+  };
+  let enabled=true;
+  const clear=mountHeroSwipe(hero,path,()=>enabled);
+  const send=(type,x,{pointerType='touch',pointerId=1}={})=>hero.dispatchEvent(
+    Object.assign(new Event(type,{cancelable:true}),{clientX:x,clientY:80,pointerType,pointerId,isPrimary:true})
+  );
+  send('pointerdown',20,{pointerType:'mouse'});
+  send('pointermove',65,{pointerType:'mouse'});
+  assert.equal(classes.size,0);
+  send('pointerdown',30);
+  send('pointermove',34);
+  assert.equal(classes.size,0);
+  assert.equal(send('pointermove',75,{pointerId:2}),true);
+  assert.equal(classes.size,0);
+  assert.equal(send('pointermove',80),true);
+  assert.equal(attributes.get('points'),'20,60 70,60');
+  assert.ok(classes.has('is-active'));
+  for(let x=90;x<300;x+=10)send('pointermove',x);
+  assert.ok(attributes.get('points').split(' ').length<=16);
+  send('pointercancel',300);
+  assert.equal(classes.size,0);
+  send('pointermove',310);
+  assert.equal(classes.size,0);
+  send('pointerdown',20);
+  send('pointermove',50);
+  enabled=false;
+  clear();
+  assert.equal(classes.size,0);
+  send('pointerdown',20);
+  send('pointermove',50);
+  assert.equal(classes.size,0);
 });
