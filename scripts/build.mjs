@@ -18,7 +18,7 @@ const publicPage=(html,page)=>production
   : html;
 await fs.mkdir(path.join(out,'assets','social'),{recursive:true});
 await fs.mkdir(path.join(out,'projects'),{recursive:true});
-for(const file of ['index.html','work.html','project.html','lab.html','journal.html','styles.css','enhancements.css','theme.js','app.js','projects.js'])await fs.copyFile(path.join(root,file),path.join(out,file));
+for(const file of ['index.html','work.html','project.html','lab.html','journal.html','styles.css','enhancements.css','workbench.css','theme.js','app.js','projects.js'])await fs.copyFile(path.join(root,file),path.join(out,file));
 for(const file of await fs.readdir(path.join(root,'assets')))if(!file.endsWith('.json'))await fs.copyFile(path.join(root,'assets',file),path.join(out,'assets',file));
 await build({entryPoints:[path.join(root,'src','enhancements.js')],bundle:true,splitting:true,format:'esm',platform:'browser',target:['es2022'],minify:true,outdir:path.join(out,'assets'),chunkNames:'chunks/[name]-[hash]',legalComments:'linked',metafile:true});
 const template=await fs.readFile(path.join(root,'project.html'),'utf8');

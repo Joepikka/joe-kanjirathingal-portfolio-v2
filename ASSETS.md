@@ -40,3 +40,9 @@ The WebP versions of the existing portraits and project screenshots are determin
 - assets/meme-cover.webp and meme-cover-small.webp: original fictional mascot/research concept; no launched token or financial-performance claim.
 
 Created with the built-in image generator at Joe’s request, using separate project-specific prompts. Exact prompts are saved beside every WebP in .webp.json provenance sidecars. Full images are1536×1024 and mobile variants640×427. Existing genuine application screenshots remain in use for the other projects.
+## Workbench portraits and photos
+
+- `joe-workbench-studio.webp` and its small variant show an AI-generated studio portrait derived from Joe's own rooftop and alpine reference photos.
+- `joe-workbench-portrait.webp` and its small variant show an AI-generated close portrait derived from Joe's own rooftop and Trevi Fountain reference photos. Both portraits are labeled on the page.
+- `joe-alpine-lookout.webp`, `joe-rome-rooftop.webp`, and `joe-trevi-fountain.webp` are web-size copies of Joe's supplied photographs. The raw uploads and their metadata are not part of the site.
+- The workbench models are original procedural geometry in `src/workbench-models.js`. They illustrate the project concepts. The case studies contain the measured results.
