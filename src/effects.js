@@ -24,7 +24,7 @@ function splitChars(node){
 
 function proximityName(enabled){
   const hero=document.querySelector('.hero');if(!hero)return;
-  const targets=[...hero.querySelectorAll('.name-track>span,.mobile-hero-name')];
+  const targets=[...hero.querySelectorAll('.name-track>span')];
   const chars=targets.flatMap(splitChars);if(!chars.length)return;
   let pointer=null,frame=0;
   function draw(){

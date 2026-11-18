@@ -6,6 +6,8 @@ import vm from 'node:vm';
 const root=path.resolve(import.meta.dirname,'..');
 const context={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'projects.js'),'utf8'),context);
 const projects=context.window.portfolioProjects;
+const v2Origin='https://joe-kanjirathingal-portfolio-v2.vercel.app';
+const production=process.env.VERCEL_ENV==='production';
 test('every catalogue project has a complete static page and its own social PNG',()=>{
   for(const project of projects){
     const file=path.join(root,'dist','projects',`${project.id}.html`);
@@ -27,7 +29,14 @@ test('built pages reference existing local assets and preserve legacy project en
   for(const filename of htmlFiles){
     const file=path.join(root,'dist',filename);assert.ok(fs.existsSync(file),`${filename} exists`);
     const html=fs.readFileSync(file,'utf8');
-    assert.ok(html.includes('name="robots" content="noindex,nofollow"'), 'Separate preview should not compete in search');
+    const publicPage=filename==='index.html'||filename==='work.html'||filename.startsWith('projects/');
+    const canonical=new URL(filename==='index.html'?'/':filename,v2Origin).href;
+    if(production&&publicPage){
+      assert.doesNotMatch(html,/name="robots"[^>]*noindex/);
+      assert.ok(html.includes(`rel="canonical" href="${canonical}"`),`${filename} needs its V2 canonical URL`);
+    }else{
+      assert.match(html,/name="robots" content="noindex,nofollow"/);
+    }
     const base=html.includes('<base href="../">')?path.join(root,'dist'):path.dirname(file);
     for(const match of html.matchAll(/(?:src|href)="([^"#?]+)(?:[?#][^"]*)?"/g)){
       const target=match[1];if(/^(?:https?:|mailto:|data:|tel:|\.\.\/)/.test(target))continue;
@@ -35,4 +44,32 @@ test('built pages reference existing local assets and preserve legacy project en
       assert.ok(fs.existsSync(local),`${filename} references missing ${target}`);
     }
   }
+});
+test('homepage offers the résumé and direct featured case study together',()=>{
+  const home=fs.readFileSync(path.join(root,'dist/index.html'),'utf8');
+  const actions=home.match(/class="hero-actions">([\s\S]*?)<\/div>/)?.[1]||'';
+  assert.match(actions,/href="projects\/kerala-veg-prices.html"/);
+  assert.match(actions,/href="assets\/joe-kanjirathingal-resume.pdf" download/);
+});
+test('public results and evidence are available before JavaScript',()=>{
+  for(const project of projects){
+    const html=fs.readFileSync(path.join(root,'dist/projects',`${project.id}.html`),'utf8');
+    const outcome=html.indexOf('class="project-outcome"');
+    assert.ok(outcome>0&&outcome<html.indexOf('class="project-detail-media"'),`${project.title} needs its result before the screenshot`);
+    if(project.id==='kerala-veg-prices'){
+      assert.match(html.slice(outcome,html.indexOf('class="project-detail-media"')), /4 of 5[\s\S]*16 days[\s\S]*Power BI report as PDF/);
+    }
+  }
+});
+test('only the V2 production build advertises its public routes for indexing',()=>{
+  const robots=fs.readFileSync(path.join(root,'dist/robots.txt'),'utf8');
+  const sitemap=path.join(root,'dist/sitemap.xml');
+  if(!production){
+    assert.match(robots,/Disallow: \/\s*$/);
+    assert.ok(!fs.existsSync(sitemap));
+    return;
+  }
+  assert.ok(robots.includes(`Sitemap: ${v2Origin}/sitemap.xml`));
+  const urls=[...fs.readFileSync(sitemap,'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map(match=>match[1]);
+  assert.deepEqual(urls,[`${v2Origin}/`,`${v2Origin}/work.html`,...projects.map(project=>`${v2Origin}/projects/${project.id}.html`)]);
 });

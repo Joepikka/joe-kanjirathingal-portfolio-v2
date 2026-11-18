@@ -17,11 +17,8 @@ export function initMotion(projects){
   const enabled=()=>canAnimate({paused:document.body.classList.contains('motion-paused'),reduced:reduced.matches,hidden:document.hidden});
 
   // Keep the existing portrait and real project imagery; the field is decorative SVG.
-  let depth;
+  const depth=hero?.querySelector('.portrait-depth');
   if(hero){
-    depth=document.createElement('div');depth.className='portrait-depth';
-    const portrait=hero.querySelector('.hero-portrait');
-    portrait.before(depth);depth.append(portrait);
     const field=document.createElement('div');field.className='hero-field';field.setAttribute('aria-hidden','true');
     field.innerHTML='<svg viewBox="0 0 1200 800" fill="none"><g class="field-orbits"><ellipse cx="600" cy="390" rx="440" ry="260" transform="rotate(-24 600 390)"/><ellipse cx="600" cy="390" rx="440" ry="160" transform="rotate(30 600 390)"/><path d="M78 600 296 238 787 128 1104 480 790 685 78 600M296 238 790 685M787 128 1104 480"/></g><g class="field-points"><circle cx="78" cy="600" r="4"/><circle cx="296" cy="238" r="5"/><circle cx="787" cy="128" r="4"/><circle cx="1104" cy="480" r="5"/><circle cx="790" cy="685" r="4"/></g></svg>';
     hero.prepend(field);
@@ -39,7 +36,7 @@ export function initMotion(projects){
   }
 
   let showcase,showcaseImage,showcaseLoop,showcaseTitle,showcaseCount,currentId;
-  const rows=list?[...list.querySelectorAll('.project-row')]:[],rowVideos=[];
+  const rows=list?[...list.querySelectorAll('.project-row')]:[];
   if(list){
     const wrap=document.createElement('div');wrap.className='work-showcase';list.before(wrap);wrap.append(list);
     showcase=document.createElement('a');showcase.className='project-spotlight';
@@ -51,13 +48,19 @@ export function initMotion(projects){
       if(!project)return;
       const number=document.createElement('span');number.className='project-index';number.textContent=String(index+1).padStart(2,'0');row.prepend(number);
       const thumb=document.createElement('div');thumb.className='row-image';thumb.style.background=project.color;
-      const img=document.createElement('img');img.src=project.imageSmall||project.image;img.alt=project.imageAlt||`${project.title} project preview`;img.loading='lazy';img.width=project.mediaWidth;img.height=project.mediaHeight;thumb.append(img);row.append(thumb);
-      if(project.imageKind==='concept'){const note=document.createElement('span');note.className='row-image-note';note.textContent='Concept illustration';thumb.append(note);}
-      if(project.explainer){
-        const video=document.createElement('video');
-        Object.assign(video,{muted:true,loop:true,playsInline:true,preload:'none',poster:project.explainerPoster||''});
-        video.setAttribute('aria-hidden','true');video.dataset.src=project.explainer;thumb.append(video);rowVideos.push(video);
+      const img=document.createElement('img');
+      if(project.imageSmall){
+        img.sizes='(max-width: 720px) 88vw, 44vw';
+        img.srcset=`${project.imageSmall} ${project.imageSmallWidth}w, ${project.image} ${project.imageWidth}w`;
       }
+      img.src=project.image;
+      img.alt=project.imageAlt||`${project.title} project preview`;
+      img.loading='lazy';
+      img.width=project.mediaWidth;
+      img.height=project.mediaHeight;
+      thumb.append(img);
+      row.append(thumb);
+      if(project.imageKind==='concept'){const note=document.createElement('span');note.className='row-image-note';note.textContent='Concept illustration';thumb.append(note);}
       row.addEventListener('pointerenter',()=>{if(fine.matches)selectProject(project.id);});
       row.addEventListener('focus',()=>selectProject(project.id));
     });
@@ -91,27 +94,6 @@ export function initMotion(projects){
 
   const thread=mountCursorThread();
 
-  // Phones and tablets: the explainer in view plays muted in its card; one at a time, never on Save-Data.
-  const inView=new Set();
-  function syncRowVideos(){
-    const allowed=enabled()&&!desktop.matches&&!navigator.connection?.saveData;
-    const best=allowed?[...inView].sort((a,b)=>b.ratio-a.ratio)[0]?.video:null;
-    rowVideos.forEach(video=>{
-      const play=video===best;
-      video.parentElement.classList.toggle('playing',play);
-      if(play){if(!video.src)video.src=video.dataset.src;video.play().catch(()=>video.parentElement.classList.remove('playing'));}
-      else if(!video.paused)video.pause();
-    });
-  }
-  const rowObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      const item=[...inView].find(i=>i.video===entry.target);if(item)inView.delete(item);
-      if(entry.intersectionRatio>=.6)inView.add({video:entry.target,ratio:entry.intersectionRatio});
-    });
-    syncRowVideos();
-  },{threshold:[0,.6,.8,1]});
-  rowVideos.forEach(video=>rowObserver.observe(video));
-
   // A single control on every page shares the existing pause state.
   if(!document.querySelector('.motion-toggle')){
     const control=document.createElement('button');control.type='button';control.className='tool-button motion-toggle motion-tool';
@@ -141,10 +123,10 @@ export function initMotion(projects){
         if(rect.bottom<0||target.contains(document.activeElement))return;
         gsap.from(target,{y:desktop.matches?36:18,opacity:0,duration:.65,ease:'power3.out',scrollTrigger:{trigger:target,start:'top 94%',once:true}});
       });
-      if(hero&&!entrancePlayed&&scrollY<80){
+      if(hero&&fine.matches&&!entrancePlayed&&scrollY<80){
         entrancePlayed=true;
         gsap.from(['.location-hanger','.hero-role','.hero-field-label','.mobile-hero-name','.hero-bottom'],{y:22,opacity:0,duration:.85,stagger:.09,ease:'power3.out'});
-        gsap.from(depth,{opacity:0,scale:1.025,duration:1.2,ease:'power2.out'});
+        if(depth)gsap.from(depth,{opacity:0,scale:1.025,duration:1.2,ease:'power2.out'});
       }
       if(desktop.matches){
         document.querySelectorAll('.ribbon-frame img,.desk-portrait img').forEach(image=>{
@@ -176,7 +158,7 @@ export function initMotion(projects){
     // Also finish a crossfade created outside the context before pausing.
     if(showcaseImage){gsap.killTweensOf(showcaseImage);gsap.set(showcaseImage,{clearProps:'opacity,transform'});}
   }
-  function refresh(){stop();syncControl();if(enabled())start();syncLoop();syncRowVideos();loadNetwork();network?.wake();}
+  function refresh(){stop();syncControl();if(enabled())start();syncLoop();loadNetwork();network?.wake();}
   hero?.addEventListener('pointermove',event=>{
     if(!enabled())return;
     const p=pointerDepth(event.clientX,event.clientY,hero.getBoundingClientRect());

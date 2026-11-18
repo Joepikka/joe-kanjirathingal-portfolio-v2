@@ -30,7 +30,7 @@ Open `http://127.0.0.1:4173/`. Run `npm test` after building. No API keys are re
 
 Original facts live in `projects.js` and the root HTML pages. New controls are in `src/enhancements.js`, graphics in `src/scenes.js`, and responsive/theme extensions in `enhancements.css`. `scripts/build.mjs` generates `dist/`, bundles Three.js locally, and creates share images from original screenshots.
 
-Deploy `dist/`, or let the separate Vercel project `joe-kanjirathingal-portfolio-v2` run `npm ci` and `npm run build`. Vercel's `VERCEL_URL` supplies the build origin for share images; `SITE_URL` can override it. This parallel edition retains `noindex` metadata and a blocking robots.txt so it does not compete with the original portfolio in search. Publishing V2 does not replace or modify the original site.
+The separate Vercel project `joe-kanjirathingal-portfolio-v2` runs `npm ci` and `npm run build`. Its production build publishes a sitemap and canonical URLs for the V2 homepage, gallery, and case studies. Preview and local builds retain `noindex` and a blocking robots.txt. `SITE_URL` can override the preview origin for share images.
 
 Synthetic sentences/coordinates are explicitly illustrative. They are not IntentDesk embeddings, benchmark outputs, or new research claims. The original project metrics and limitations are preserved.
 

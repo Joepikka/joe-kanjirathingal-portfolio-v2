@@ -8,8 +8,14 @@ const root=path.resolve(import.meta.dirname,'..'), out=path.join(root,'dist');
 const catalogue={window:{}};vm.runInNewContext(await fs.readFile(path.join(root,'projects.js'),'utf8'),catalogue);
 const projects=catalogue.window.portfolioProjects;
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const origin=(process.env.SITE_URL||(process.env.VERCEL_URL?`https://${process.env.VERCEL_URL}`:'')).replace(/\/$/,'');
+const productionOrigin='https://joe-kanjirathingal-portfolio-v2.vercel.app';
+const production=process.env.VERCEL_ENV==='production';
+const origin=(production?productionOrigin:process.env.SITE_URL||(process.env.VERCEL_URL?`https://${process.env.VERCEL_URL}`:'')).replace(/\/$/,'');
 if(origin&&!/^https?:\/\/[a-z\d.:-]+$/i.test(origin))throw new Error('SITE_URL must be an HTTP(S) origin');
+const previewRobots='<meta name="robots" content="noindex,nofollow">';
+const publicPage=(html,page)=>production
+  ? html.replace(previewRobots,`<link rel="canonical" href="${productionOrigin}${page}">`)
+  : html;
 await fs.mkdir(path.join(out,'assets','social'),{recursive:true});
 await fs.mkdir(path.join(out,'projects'),{recursive:true});
 for(const file of ['index.html','work.html','project.html','lab.html','journal.html','styles.css','enhancements.css','theme.js','app.js','projects.js'])await fs.copyFile(path.join(root,file),path.join(out,file));
@@ -26,14 +32,34 @@ for(const project of projects){
   const imageUrl=`${origin}/assets/social/${project.id}.png`, pageUrl=`${origin}/projects/${project.id}.html`;
   const social=`<base href="../"><meta property="og:type" content="website"><meta property="og:title" content="${esc(project.title)} — Joe Kanjirathingal"><meta property="og:description" content="${esc(project.summary)}"><meta property="og:image" content="${esc(imageUrl)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="${esc(pageUrl)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${esc(imageUrl)}">`;
   const sections=(project.caseStudy||[]).map(s=>`<section class="case-study-section"><h2>${esc(s.heading)}</h2><p>${esc(s.text)}</p></section>`).join('');
-  const links=[project.demo&&['Explore live project',project.demo],project.source&&['Code on GitHub',project.source],project.evidence&&['Read the evidence',project.evidence]].filter(Boolean).map(([label,url])=>`<a class="pill-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`).join('');
-  const serverContent=`<a class="text-link project-back" href="work.html">← All projects</a><h1>${esc(project.title)}</h1><p class="project-summary">${esc(project.summary)}</p><dl class="project-facts"><div><dt>Focus</dt><dd>${esc(project.discipline)}</dd></div><div><dt>Tools</dt><dd>${project.technologies.map(esc).join(' · ')}</dd></div><div><dt>Project status</dt><dd>${esc(project.status)}</dd></div></dl><div class="project-actions">${links}</div><div class="project-detail-media" style="background:${esc(project.color)}"><img src="${esc(project.image)}" alt="${esc(project.imageAlt||project.title+' project preview')}" width="${project.mediaWidth||1440}" height="${project.mediaHeight||900}"></div><p class="media-caption">${esc(project.imageCaption||'Project illustration')}</p><section class="project-detail-copy"><h2>In the build.</h2><div><ul>${project.features.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><p class="project-note">${esc(project.note)}</p></div></section><div class="case-study">${sections}</div>`;
+  const links=[
+    project.demo&&['Explore live project',project.demo],
+    project.powerBiReport&&['Power BI report as PDF',project.powerBiReport],
+    project.source&&['Code on GitHub',project.source],
+    project.evidence&&['Read the evidence',project.evidence]
+  ].filter(Boolean).map(([label,url])=>`<a class="pill-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`).join('');
+  const outcome=`<section class="project-outcome" aria-label="Project outcome"><h2>Outcome</h2><p>${esc(project.resultSummary)}</p></section>`;
+  const mediaVariants=project.imageSmall
+    ? ` srcset="${esc(project.imageSmall)} ${project.imageSmallWidth}w, ${esc(project.image)} ${project.imageWidth}w" sizes="(max-width: 720px) 90vw, (max-width: 1300px) 80vw, 1060px"`
+    : '';
+  const serverContent=`<a class="text-link project-back" href="work.html">← All projects</a><h1>${esc(project.title)}</h1><p class="project-summary">${esc(project.summary)}</p>${outcome}${links?`<div class="project-actions">${links}</div>`:''}<div class="project-detail-media" style="background:${esc(project.color)}"><img src="${esc(project.image)}"${mediaVariants} alt="${esc(project.imageAlt||project.title+' project preview')}" width="${project.mediaWidth||1440}" height="${project.mediaHeight||900}"></div><p class="media-caption detail-media-caption">${esc(project.imageCaption||'Project illustration')}</p><dl class="project-facts"><div><dt>Focus</dt><dd>${esc(project.discipline)}</dd></div><div><dt>Tools</dt><dd>${project.technologies.map(esc).join(' · ')}</dd></div><div><dt>Project status</dt><dd>${esc(project.status)}</dd></div></dl><section class="project-detail-copy"><h2>In the build.</h2><div><ul>${project.features.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><p class="project-note">${esc(project.note)}</p></div></section><div class="case-study">${sections}</div>`;
   const html=template.replace('<head>',`<head>${social}`).replace(/<title>[\s\S]*?<\/title>/,`<title>${esc(project.title)} — Joe Kanjirathingal</title>`).replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${esc(project.summary)}">`).replace(/<main[^>]*data-project-detail>[\s\S]*?<\/main>/,`<main class="content-width project-detail" id="main" data-project-detail data-project-id="${esc(project.id)}">${serverContent}</main>`);
-  await fs.writeFile(path.join(out,'projects',`${project.id}.html`),html.replace(/href="#/g,`href="projects/${project.id}.html#`));
+  await fs.writeFile(path.join(out,'projects',`${project.id}.html`),publicPage(html.replace(/href="#/g,`href="projects/${project.id}.html#`),`/projects/${project.id}.html`));
 }
 let home=await fs.readFile(path.join(out,'index.html'),'utf8');
 home=home.replaceAll('https://joe-kanjirathingal-portfolio.vercel.app/assets/joe-original.jpg',`${origin}/assets/social/quotecheck.png`);
 home=home.replace(/<meta property="og:url" content="[^"]*">/,`<meta property="og:url" content="${origin}/">`);
-await fs.writeFile(path.join(out,'index.html'),home);
-await fs.writeFile(path.join(out,'robots.txt'),'User-agent: *\nDisallow: /\n');
+await fs.writeFile(path.join(out,'index.html'),publicPage(home,'/'));
+const workPath=path.join(out,'work.html');
+await fs.writeFile(workPath,publicPage(await fs.readFile(workPath,'utf8'),'/work.html'));
+const sitemapPath=path.join(out,'sitemap.xml');
+if(production){
+  const paths=['/','/work.html',...projects.map(project=>`/projects/${project.id}.html`)];
+  const entries=paths.map(page=>`  <url><loc>${productionOrigin}${page}</loc></url>`).join('\n');
+  await fs.writeFile(sitemapPath,`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`);
+  await fs.writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nSitemap: ${productionOrigin}/sitemap.xml\n`);
+}else{
+  await fs.rm(sitemapPath,{force:true});
+  await fs.writeFile(path.join(out,'robots.txt'),'User-agent: *\nDisallow: /\n');
+}
 console.log(`Built ${projects.length} standalone project pages and PNG cards, homepage, catalogue, journal, and lab.`);

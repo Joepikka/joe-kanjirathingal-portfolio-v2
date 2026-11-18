@@ -2,6 +2,9 @@
 window.portfolioProjects = [
   {
     "id": "kerala-veg-prices",
+    "featuredSummary": "I cleaned 26.5M wholesale records and tested an early warning model for price spikes.",
+    "resultSummary": "26.5M wholesale records analyzed. The model flagged 4 of 5 held-out spikes a median of 16 days before their peaks.",
+    "powerBiReport": "https://github.com/Joepikka/kerala-veg-prices/blob/main/reports/kerala_veg_prices_powerbi.pdf",
     "title": "Kerala Vegetable Prices",
     "category": "analysis ml",
     "discipline": "Data Analysis, Web Scraping & ML",
@@ -26,7 +29,7 @@ window.portfolioProjects = [
       "Excel",
       "Flourish"
     ],
-    "summary": "26.5 million wholesale market records show how much more Kerala pays for tomato, onion and potato, how fast price shocks arrive, and a model that warns of a spike about 16 days ahead.",
+    "summary": "An analysis of what Kerala pays for tomato, onion and potato, how price shocks travel between wholesale markets, and whether a model can warn of a spike.",
     "paragraphs": [
       "Kerala buys most of its tomato, onion and potato from markets in other states. Using Agmarknet wholesale records from 2021 to May 2026, answer three questions a buyer, cooperative or planner asks: how much more Kerala pays, how far apart nearby Kerala markets price the same crop, and whether a price spike can be seen coming.",
       "A resumable parallel download of 5 GB from the India Data Portal, typed Parquet staging and a DuckDB warehouse. Two overlapping market-code systems were double-counting markets; 3,860 codes were resolved to 2,007 markets. A market-day more than 3× off its state's median is dropped, which removes a market that reported a flat ₹270/kg for weeks. Scrapling collects GDELT news volume and Open-Meteo weather at the supplying hubs; CAPTCHA-gated portals and sites whose robots.txt blocks AI crawlers were not scraped.",
@@ -73,6 +76,8 @@ window.portfolioProjects = [
   },
   {
     "id": "retail-analytics",
+    "featuredSummary": "I built a SQL warehouse and caught a 48-hour gap in purchase tracking.",
+    "resultSummary": "110M e-commerce events analyzed. Finding a 48-hour tracking outage removed a false 53% weekend effect from the conversion analysis.",
     "explainer": "assets/explainer-retail-analytics.mp4",
     "explainerPoster": "assets/explainer-retail-analytics-poster.webp",
     "title": "Retail Analytics Lab",
@@ -145,6 +150,8 @@ window.portfolioProjects = [
   },
   {
     "id": "quotecheck",
+    "featuredSummary": "I built a system to match supplier products and trace prices back to their quotes.",
+    "resultSummary": "MiniLM reached 64.7% F1 on a 4,500-pair benchmark, compared with 43.4% for the baseline. It ranks suggestions for human review.",
     "explainer": "assets/explainer-quotecheck.mp4",
     "explainerPoster": "assets/explainer-quotecheck-poster.webp",
     "title": "QuoteCheck",
@@ -217,6 +224,8 @@ window.portfolioProjects = [
   },
   {
     "id": "intentdesk",
+    "featuredSummary": "I tested an NLP model for routing support requests and built a review workflow.",
+    "resultSummary": "96.24% accuracy on 4,500 known-intent requests. The proposed unsupported-request rule failed its check and stays disabled.",
     "explainer": "assets/explainer-intentdesk.mp4",
     "explainerPoster": "assets/explainer-intentdesk-poster.webp",
     "title": "IntentDesk",
@@ -293,6 +302,7 @@ window.portfolioProjects = [
   },
   {
     "id": "laliga-ml",
+    "resultSummary": "On 86 reserved historical fixtures, the new model scored 47.67% accuracy against 50.00% for the frozen baseline.",
     "explainer": "assets/explainer-laliga-ml.mp4",
     "explainerPoster": "assets/explainer-laliga-ml-poster.webp",
     "title": "La Liga ML Forecasting",
@@ -362,6 +372,7 @@ window.portfolioProjects = [
   },
   {
     "id": "lillys-pos",
+    "resultSummary": "The guest landing page, menu, item customization, and sign-in entry were verified. Staff ordering and cash workflows were reviewed in source.",
     "explainer": "assets/explainer-lillys-pos.mp4",
     "explainerPoster": "assets/explainer-lillys-pos-poster.webp",
     "title": "Lilly's POS",
@@ -435,6 +446,7 @@ window.portfolioProjects = [
   },
   {
     "id": "cooksmart",
+    "resultSummary": "Visitors can discover and save recipes with source attribution. Favorites are stored locally on each device.",
     "explainer": "assets/explainer-cooksmart.mp4",
     "explainerPoster": "assets/explainer-cooksmart-poster.webp",
     "title": "CookSmart",
@@ -499,6 +511,7 @@ window.portfolioProjects = [
   },
   {
     "id": "smile-dental",
+    "resultSummary": "The public interface and booking implementation are available as a student prototype. Appointment and delivery workflows still need live verification.",
     "explainer": "assets/explainer-smile-dental.mp4",
     "explainerPoster": "assets/explainer-smile-dental-poster.webp",
     "title": "Smile Dental",
@@ -565,6 +578,7 @@ window.portfolioProjects = [
   },
   {
     "id": "meme-coin-lab",
+    "resultSummary": "The prototype passed documented backend and interface checks, including a local scheduler run. Publication remains in draft mode.",
     "explainer": "assets/explainer-meme-coin-lab.mp4",
     "explainerPoster": "assets/explainer-meme-coin-lab-poster.webp",
     "title": "Meme Coin Lab",
@@ -636,6 +650,7 @@ window.portfolioProjects = [
   },
   {
     "id": "forex-demo",
+    "resultSummary": "The repository records 25 chart, status, and viewport checks. Models are evaluated against baselines in a demo environment.",
     "explainer": "assets/explainer-forex-demo.mp4",
     "explainerPoster": "assets/explainer-forex-demo-poster.webp",
     "title": "Forex Demo Research Platform",
