@@ -164,7 +164,6 @@
   margin-top: 55px;
 }
 .travel-photos img { width: 100%; height: auto; background: var(--panel); }
-.about-photo .workbench-bio-photo { aspect-ratio: 4 / 5; }
 
 @media (max-width: 860px) {
   .studio-intro, .workbench-heading, .workbench-layout { grid-template-columns: minmax(0, 1fr); gap: 22px; }

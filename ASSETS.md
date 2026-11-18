@@ -43,6 +43,6 @@ Created with the built-in image generator at Joe’s request, using separate pro
 ## Workbench portraits and photos
 
 - `joe-workbench-studio.webp` and its small variant show an AI-generated studio portrait derived from Joe's own rooftop and alpine reference photos.
-- `joe-workbench-portrait.webp` and its small variant show an AI-generated close portrait derived from Joe's own rooftop and Trevi Fountain reference photos. Both portraits are labeled on the page.
+- The About portrait uses `joe-original.webp` and its small variant, made from the original rooftop photograph supplied by Joe.
 - `joe-alpine-lookout.webp`, `joe-rome-rooftop.webp`, and `joe-trevi-fountain.webp` are web-size copies of Joe's supplied photographs. The raw uploads and their metadata are not part of the site.
 - The workbench models are original procedural geometry in `src/workbench-models.js`. They illustrate the project concepts. The case studies contain the measured results.
